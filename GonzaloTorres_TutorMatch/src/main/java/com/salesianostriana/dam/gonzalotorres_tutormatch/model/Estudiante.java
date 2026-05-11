@@ -1,9 +1,11 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.model;
 
+import java.time.LocalDate;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import com.salesianostriana.dam.gonzalotorres_tutormatch.enums.NivelEstudiante;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,18 +22,22 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Estudiante {
 	
-	@Id @GeneratedValue
-	private Long id;
+		@Id @GeneratedValue
+	    private Long id; 
+	    private String nombre; 
+	    private String apellidos;
+	    private String email;
+	    private NivelEstudiante nivel; 
+	    private String telefono; 
+	    private LocalDate fechaNac; 
+	    private LocalDateTime fechaAlta;
+	    private List<SesionTutoria> sesiones; 
+	    
+	    // Datos Tutor Legal 
+	    private String nombreTutorLeg;
+	    private String apellidosTutorLeg;
+	    private String dniTutorLeg;
+
+	}
 	
-	private String nombre;
-	private String apellidos;
-	private String contactoEmerg;
-	private ArrayList <String> listaAsign;
-	private String cursoAcademico;
-	private Date fechaNac;
-	private LocalDateTime fechaAlta;
-	private String email;
-	private boolean nivel;
-	private String telefono;
-	
-}
+
