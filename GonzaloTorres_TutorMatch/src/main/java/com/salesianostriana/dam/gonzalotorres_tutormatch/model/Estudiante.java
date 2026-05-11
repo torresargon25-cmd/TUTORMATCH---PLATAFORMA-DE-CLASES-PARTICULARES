@@ -24,26 +24,14 @@ public class Estudiante {
 	private Long id;
 	
 	private String nombre;
-
 	private String apellidos;
-	private String nombreTutorLeg;
-
-	private String apellidosTutorLeg;
-
-	private String dniTutorLeg;
-
+	private String contactoEmerg;
 	private ArrayList <String> listaAsign;
-
 	private String cursoAcademico;
-
 	private Date fechaNac;
-
 	private LocalDateTime fechaAlta;
-
 	private String email;
-
 	private boolean nivel;
-
 	private String telefono;
 	
 }
