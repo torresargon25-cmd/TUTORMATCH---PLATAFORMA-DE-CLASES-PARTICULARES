@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.enums.EstadoSesion;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -25,8 +27,11 @@ public class SesionTutoria {
    
     private LocalDateTime fecha; 
     private Double duracionHoras; 
-    private Double costeTotal;  
-    private EstadoSesion estado; 
+    private Double costeTotal;
+    
+    @Enumerated(EnumType.STRING)
+    private EstadoSesion estado;
+    
     private String observaciones; 
     
     @ManyToOne
@@ -35,9 +40,9 @@ public class SesionTutoria {
     
     @ManyToOne
     @JoinColumn (name = "tutor_id")
-    
-    //Preguntar a Luismi por los métodos helper
     private Tutor tutor; 
     
-    
+    @ManyToOne
+    @JoinColumn(name = "materia_id")
+    private Materia materia;
 }
