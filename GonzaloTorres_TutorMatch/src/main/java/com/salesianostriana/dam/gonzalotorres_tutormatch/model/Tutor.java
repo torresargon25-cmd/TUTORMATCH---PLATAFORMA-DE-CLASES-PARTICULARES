@@ -7,6 +7,7 @@ import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,8 @@ public class Tutor {
 		    private Double puntuacionNivel;
 		    private LocalDate fechaNac;
 		    private LocalDateTime fechaAlta; 
+		    
+		    @OneToMany (mappedBy = "tutor")
 		    private List<SesionTutoria> sesiones;
 		    
 	

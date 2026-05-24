@@ -8,26 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.EstudianteService;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 
 
 @Controller
 @RequestMapping("/estudiante/")
+@AllArgsConstructor
+
 
 public class ControllerEstudiante {
 
 	private final EstudianteService estudianteService;
-	
-	@GetMapping("/ListVacia")
-	public String listaVac(Model model) {
-		model.addAttribute("estudiantes", estudianteService.getLista());
-		
-		System.out.println(estudianteService.getLista());
-		return "listaVacia";
-	}
-
-	public ControllerEstudiante(EstudianteService estudianteService) {
-		super();
-		this.estudianteService = estudianteService;
-	}
 	
 }

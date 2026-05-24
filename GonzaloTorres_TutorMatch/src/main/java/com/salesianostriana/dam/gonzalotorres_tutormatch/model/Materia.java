@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
+@Entity //Preguntar a Luismi
 public class Materia {
 
 		@Id @GeneratedValue
