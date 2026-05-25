@@ -27,6 +27,7 @@ public class Materia {
     private String nombre;
     private String dificultad;
     private String descripcion;
+    private String imagen;
 
     @Enumerated(EnumType.STRING)
     private EtapaEducativa etapa;

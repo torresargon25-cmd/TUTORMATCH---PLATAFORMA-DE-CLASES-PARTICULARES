@@ -12,19 +12,20 @@ import lombok.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Usuario {
 
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
-    private String nombre;
-    private String apellidos;
+    protected String nombre;
+    protected String apellidos;
 
     @Column(unique = true, nullable = false)
-    private String email;
+    protected String email;
 
-    private String password;
+    protected String password;
 
     @Enumerated(EnumType.STRING)
-    private Rol rol;
+    protected Rol rol;
 	
 }
