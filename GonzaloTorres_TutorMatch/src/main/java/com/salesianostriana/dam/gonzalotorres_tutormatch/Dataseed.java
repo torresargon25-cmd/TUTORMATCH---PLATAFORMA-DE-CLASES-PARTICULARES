@@ -7,6 +7,7 @@ import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Estudiante.Estudi
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.SesionTutoria;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.repository.EstudianteRepository;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.repository.MateriaRepository;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.repository.SesionTutoriaRepository;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.repository.TutorRepository;
 
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class Dataseed {
 	private final EstudianteRepository estudianteRepository;
 	private final TutorRepository tutorRepository;
 	private final MateriaRepository materiaRepository;
-	private final SesionTutoria sesiontutoriaRepository;
+	private final SesionTutoriaRepository sesiontutoriaRepository;
 	
 	
 	
