@@ -7,21 +7,24 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
-public class Admin {
+@Table(name = "usuario")
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Usuario {
 
-    @Id @GeneratedValue
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombre;
     private String apellidos;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Rol rol;  
+    private Rol rol;
+	
 }

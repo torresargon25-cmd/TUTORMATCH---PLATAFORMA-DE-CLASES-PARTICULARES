@@ -18,21 +18,6 @@ public class Dataseed {
 	@PostConstruct
 	public void init() {
 		
-		estudianteRepository.save(
-		Estudiante.builder()
-		.nombre("Gonzalo")
-		.apellidos("Torres Arroyo" )
-		.email("a@gmail.com")
-		.password("atencion")
-		.rol(Rol.ESTUDIANTE)
-		.nivel(NivelEstudiante.MEDIO)
-		.telefono("623456789")
-		.fechaNac(null)
-		.fechaAlta(null)
-		.nombreTutorLeg("Paco")
-		.apellidosTutorLeg("Fernández Reino")
-		.dniTutorLeg("34567984F")
-		.build());
 		
 	}
 	
