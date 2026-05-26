@@ -5,12 +5,15 @@ import com.salesianostriana.dam.gonzalotorres_tutormatch.enums.Rol;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 @Entity
 @Table(name = "estudiante")
 @PrimaryKeyJoinColumn(name = "id")
@@ -30,11 +33,5 @@ public class Estudiante extends Usuario {
 
     @OneToMany(mappedBy = "estudiante")
     private List<SesionTutoria> listaSesiones = new ArrayList<>();
-
-	public Estudiante(Long id, String nombre, String apellidos, String email, String password, Rol rol) {
-		super(id, nombre, apellidos, email, password, rol);
-		// TODO Auto-generated constructor stub
-	}
-    
-    
+   
 }
