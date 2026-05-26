@@ -24,15 +24,17 @@ public class ControllerTutor {
 	@GetMapping("/new")
 	public String addTutor (Model model) {
 		model.addAttribute("tutor", new Tutor ());
-		return "form_tutor";
-		
+		return "tutor/form_tutor";	
 	}
+	
 	@PostMapping("save")
 	public String saveTutor (@ModelAttribute Tutor tutor) {
 		tutorService.save(tutor);
-		return "redirect:/tutor/";
-		
-		
+		return "redirect:/tutor/";	
 	}
-	
+	@GetMapping("/")
+	public String listTutors(Model model) {
+	    model.addAttribute("tutores", tutorService.findAll());
+	    return "tutor/listTutores";
+	}
 }
