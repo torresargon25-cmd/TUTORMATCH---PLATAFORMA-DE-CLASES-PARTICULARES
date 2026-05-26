@@ -14,6 +14,7 @@ import com.salesianostriana.dam.gonzalotorres_tutormatch.repository.MateriaRepos
 import com.salesianostriana.dam.gonzalotorres_tutormatch.repository.TutorRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -73,6 +74,9 @@ public class Dataseed {
 			    .apellidosTutorLeg(null)
 			    .dniTutorLeg(null)
 			    .build();
+			
+				estudianteRepository.saveAll(List.of(e1, e2, e3));
+			
 			Tutor t1 = Tutor.builder()
 				.nombre("Paco")
 				.apellidos("Aguilar Ruíz")
@@ -85,6 +89,7 @@ public class Dataseed {
 				.puntuacionNivel(4.7)
 				.imagen("https://media.v2.siweb.es/uploaded_thumb_medium/75ced0231b30d5bbba39592fef39e64d/fotografia_curriculum_foto_linkedin_corporativa_madrid_042.jpg")
 				.build();
+			
 			Tutor t2 = Tutor.builder()
 				    .nombre("Carlos")
 				    .apellidos("Ruiz Lopez")
@@ -98,7 +103,7 @@ public class Dataseed {
 				    .imagen("https://randomuser.me/api/portraits/men/32.jpg")
 				    .build();
 
-				Tutor t3 = Tutor.builder()
+			Tutor t3 = Tutor.builder()
 				    .nombre("Laura")
 				    .apellidos("Mendez Garcia")
 				    .email("laura@tutormatch.com")
@@ -111,6 +116,8 @@ public class Dataseed {
 				    .imagen("https://randomuser.me/api/portraits/women/44.jpg")
 				    .build();
 				
+					tutorRepository.saveAll(List.of(t1, t2, t3));
+			
 				Materia m1 = Materia.builder()
 					.nombre("Lengua")
 					.dificultad(NivelDificultadM.BAJO)
@@ -159,6 +166,8 @@ public class Dataseed {
 					    .imagen("https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Parthenon_from_west.jpg/1200px-Parthenon_from_west.jpg")
 					    .build();
 				
+						materiaRepository.saveAll(List.of(m1, m2, m3, m4, m5, m6));
+				
 				SesionTutoria st1 = SesionTutoria.builder()
 						.fechaInicio(LocalDateTime.of(2000, 1, 1, 0, 0))
 						.fechaFin(LocalDateTime.of(2026, 12, 31, 23, 59))
@@ -181,7 +190,7 @@ public class Dataseed {
 					    .materia(m4)
 					    .build();
 
-					SesionTutoria st3 = SesionTutoria.builder()
+				SesionTutoria st3 = SesionTutoria.builder()
 					    .fechaInicio(LocalDateTime.of(2026, 5, 20, 9, 0))
 					    .fechaFin(LocalDateTime.of(2026, 5, 20, 10, 0))
 					    .costeTotal(null)
@@ -192,7 +201,7 @@ public class Dataseed {
 					    .materia(m5)
 					    .build();
 
-					SesionTutoria st4 = SesionTutoria.builder()
+				SesionTutoria st4 = SesionTutoria.builder()
 					    .fechaInicio(LocalDateTime.of(2026, 5, 15, 11, 0))
 					    .fechaFin(LocalDateTime.of(2026, 5, 15, 13, 0))
 					    .costeTotal(null)
@@ -203,7 +212,7 @@ public class Dataseed {
 					    .materia(m1)
 					    .build();
 
-					SesionTutoria st5 = SesionTutoria.builder()
+				SesionTutoria st5 = SesionTutoria.builder()
 					    .fechaInicio(LocalDateTime.of(2026, 6, 15, 17, 0))
 					    .fechaFin(LocalDateTime.of(2026, 6, 15, 19, 0))
 					    .costeTotal(null)
@@ -214,7 +223,7 @@ public class Dataseed {
 					    .materia(m3)
 					    .build();
 
-					SesionTutoria st6 = SesionTutoria.builder()
+				SesionTutoria st6 = SesionTutoria.builder()
 					    .fechaInicio(LocalDateTime.of(2026, 5, 28, 10, 0))
 					    .fechaFin(LocalDateTime.of(2026, 5, 28, 11, 0))
 					    .costeTotal(null)
@@ -224,6 +233,9 @@ public class Dataseed {
 					    .tutor(t2)
 					    .materia(m1)
 					    .build();
+					
+						sesiontutoriaRepository.saveAll(List.of(st1, st2, st3, st4, st5, st6));
+					
 					
 	}
 	
