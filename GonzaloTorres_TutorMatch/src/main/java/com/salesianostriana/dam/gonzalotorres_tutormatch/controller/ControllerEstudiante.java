@@ -16,8 +16,6 @@ import lombok.NoArgsConstructor;
 @Controller
 @RequestMapping("/estudiante/")
 @AllArgsConstructor
-
-
 public class ControllerEstudiante {
 
 	private final EstudianteService estudianteService;
