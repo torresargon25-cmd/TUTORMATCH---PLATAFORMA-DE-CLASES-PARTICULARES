@@ -1,9 +1,12 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.controller;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,9 +35,19 @@ public class ControllerTutor {
 		tutorService.save(tutor);
 		return "redirect:/tutor/";	
 	}
+	
 	@GetMapping("/")
 	public String listTutors(Model model) {
 	    model.addAttribute("tutores", tutorService.findAll());
 	    return "tutor/listTutores";
+	}
+	
+	@GetMapping("borrar/{id}")
+	public String borrarTutor(@PathVariable Long id) {
+	    Optional<Tutor> tutorABorrar = tutorService.findById(id);
+	    if (tutorABorrar.isPresent()) {
+	        tutorService.delete(tutorABorrar.get());
+	    }
+	    return "redirect:/tutor/";
 	}
 }
