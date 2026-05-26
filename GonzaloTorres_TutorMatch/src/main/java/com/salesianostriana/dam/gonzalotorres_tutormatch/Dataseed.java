@@ -11,6 +11,7 @@ import com.salesianostriana.dam.gonzalotorres_tutormatch.model.SesionTutoria;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Tutor;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.repository.EstudianteRepository;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.repository.MateriaRepository;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.repository.SesionTutoriaRepository;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.repository.TutorRepository;
 
 import java.time.LocalDateTime;
@@ -28,7 +29,7 @@ public class Dataseed {
 	private final EstudianteRepository estudianteRepository;
 	private final TutorRepository tutorRepository;
 	private final MateriaRepository materiaRepository;
-	private final SesionTutoria sesiontutoriaRepository;
+	private final SesionTutoriaRepository sesiontutoriaRepository;
 	
 	
 	
@@ -234,7 +235,13 @@ public class Dataseed {
 					    .materia(m1)
 					    .build();
 					
-						sesiontutoriaRepository.saveAll(List.of(st1, st2, st3, st4, st5, st6));
+						sesiontutoriaRepository.save(st1);
+						sesiontutoriaRepository.save(st2);
+						sesiontutoriaRepository.save(st3);
+						sesiontutoriaRepository.save(st4);
+						sesiontutoriaRepository.save(st5);
+						sesiontutoriaRepository.save(st6);
+						
 					
 					
 	}

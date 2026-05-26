@@ -26,7 +26,7 @@ public class Tutor extends Usuario {
     private String imagen;
     
     @Enumerated(EnumType.STRING)
-    protected Rol rol;
+    private Rol rol;
     
 
     @OneToMany(mappedBy = "tutor")
