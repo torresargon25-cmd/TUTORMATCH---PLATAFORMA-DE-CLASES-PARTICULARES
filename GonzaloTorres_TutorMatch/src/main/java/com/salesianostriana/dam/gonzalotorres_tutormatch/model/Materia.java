@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.model;
 
 import com.salesianostriana.dam.gonzalotorres_tutormatch.enums.EtapaEducativa;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.enums.NivelDificultadM;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -25,10 +26,12 @@ public class Materia {
     private Long id;
 
     private String nombre;
-    private String dificultad;
     private String descripcion;
     private String imagen;
 
+    @Enumerated(EnumType.STRING)
+    private NivelDificultadM dificultad;
+    
     @Enumerated(EnumType.STRING)
     private EtapaEducativa etapa;
 }

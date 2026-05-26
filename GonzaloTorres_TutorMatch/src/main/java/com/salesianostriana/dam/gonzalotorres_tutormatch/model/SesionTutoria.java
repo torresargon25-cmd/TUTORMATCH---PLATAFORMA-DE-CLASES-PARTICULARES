@@ -28,8 +28,8 @@ public class SesionTutoria {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
    
-    private LocalDateTime fecha; 
-    private Double duracionHoras; 
+	private LocalDateTime fechaInicio;
+	private LocalDateTime fechaFin; 
     private Double costeTotal;
     
     @Enumerated(EnumType.STRING)
