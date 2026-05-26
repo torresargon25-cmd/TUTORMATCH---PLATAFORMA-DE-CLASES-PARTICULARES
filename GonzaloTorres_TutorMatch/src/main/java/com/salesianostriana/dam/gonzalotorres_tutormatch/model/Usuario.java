@@ -3,10 +3,12 @@ package com.salesianostriana.dam.gonzalotorres_tutormatch.model;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.enums.Rol;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 @Entity
 @Table(name = "usuario")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -25,7 +27,5 @@ public abstract class Usuario {
 
     protected String password;
 
-    @Enumerated(EnumType.STRING)
-    protected Rol rol;
 	
 }
