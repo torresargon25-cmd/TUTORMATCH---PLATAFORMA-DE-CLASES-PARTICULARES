@@ -85,10 +85,10 @@
                                        class="btn btn-outline-secondary btn-sm">
                                         <i class="bi bi-eye"></i>
                                     </a>
-                                    <a th:href="@{/tutor/{id}/editar(id=${tutor.id})}"
-                                       class="btn btn-outline-primary btn-sm">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
+									<a th:href="@{/tutor/editar/{id}(id=${tutor.id})}"
+									   class="btn btn-outline-primary btn-sm">
+									    <i class="bi bi-pencil"></i>
+									</a>
 									<a th:href="@{/tutor/borrar/{id}(id=${tutor.id})}"
 									   class="btn btn-outline-danger btn-sm"
 									   onclick="return confirm('¿Seguro que quieres borrar este tutor?')">

@@ -50,4 +50,21 @@ public class ControllerTutor {
 	    }
 	    return "redirect:/tutor/";
 	}
+	
+	@GetMapping("/editar/{id}")
+	public String editarTutor(@PathVariable Long id, Model model) {
+	    Optional<Tutor> tutorAEditar = tutorService.findById(id);
+	    if (tutorAEditar.isPresent()) {
+	        model.addAttribute("tutor", tutorAEditar.get());
+	        return "tutor/form_tutor";
+	    }
+	    return "redirect:/tutor/";
+	}
+
+	@PostMapping("/editar/{id}")
+	public String guardarEdicion(@PathVariable Long id, @ModelAttribute Tutor tutor) {
+	    tutor.setId(id);
+	    tutorService.edit(tutor);
+	    return "redirect:/tutor/";
+	}
 }
