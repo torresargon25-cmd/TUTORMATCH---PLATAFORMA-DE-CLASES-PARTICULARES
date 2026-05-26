@@ -1,9 +1,8 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.enums;
 
-public enum Rol {
+public enum NivelDificultadM {
 
-	ADMIN,
-	TUTOR
+	ALTO,
+	MEDIO,
+	BAJO
 }
-
-
