@@ -22,7 +22,7 @@ public class EstudianteService extends BaseServiceImpl<Estudiante, Long, Estudia
 
 	
 	
-	//private List <Estudiante> listaEstudiantes = new ArrayList <Estudiante>(); ESTO NO
+	
 	private EstudianteRepository estudianterepository;
 	
 	

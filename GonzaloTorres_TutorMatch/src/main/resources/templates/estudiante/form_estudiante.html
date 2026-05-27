@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudiante – TutorMatch</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; }</style>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container mt-4">
+
+        <div class="mb-4">
+            <h1 class="h3 fw-bold mb-0">Nuevo estudiante</h1>
+            <p class="text-muted small mb-0">Rellena los datos para crear un nuevo estudiante</p>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+
+                <form th:action="@{/estudiante/save}"
+                      th:object="${estudiante}"
+                      method="post">
+
+                    <input type="hidden" th:field="*{id}">
+
+                    <h6 class="fw-bold text-muted mb-3">Datos personales</h6>
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Nombre</label>
+                            <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Apellidos</label>
+                            <input type="text" class="form-control" th:field="*{apellidos}" placeholder="Apellidos">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Email</label>
+                            <input type="email" class="form-control" th:field="*{email}" placeholder="email@ejemplo.com">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Contraseña</label>
+                            <input type="password" class="form-control" th:field="*{password}" placeholder="Contraseña">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Teléfono</label>
+                            <input type="text" class="form-control" th:field="*{telefono}" placeholder="600000000">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Nivel</label>
+                            <select class="form-select" th:field="*{nivel}">
+                                <option value="">-- Selecciona nivel --</option>
+                                <option th:each="n : ${T(com.salesianostriana.dam.gonzalotorres_tutormatch.enums.NivelEstudiante).values()}"
+                                        th:value="${n}" th:text="${n}">NIVEL</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">¿Es menor de edad?</label>
+                            <select class="form-select" th:field="*{esMenor}" id="esMenor">
+                                <option value="false">No</option>
+                                <option value="true">Sí</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    
+                    <div class="mt-4" id="datosTutorLegal">
+                        <h6 class="fw-bold text-muted mb-3">Datos del tutor legal</h6>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Nombre tutor legal</label>
+                                <input type="text" class="form-control" th:field="*{nombreTutorLeg}" placeholder="Nombre">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Apellidos tutor legal</label>
+                                <input type="text" class="form-control" th:field="*{apellidosTutorLeg}" placeholder="Apellidos">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">DNI tutor legal</label>
+                                <input type="text" class="form-control" th:field="*{dniTutorLeg}" placeholder="12345678A">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle me-1"></i>Guardar estudiante
+                        </button>
+                        <a th:href="@{/estudiante/listaEstudiantes}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-1"></i>Cancelar
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    
+    <script>
+        const selectMenor = document.getElementById('esMenor');
+        const datosTutor = document.getElementById('datosTutorLegal');
+
+        function toggleTutorLegal() {
+            datosTutor.style.display = selectMenor.value === 'true' ? 'block' : 'none';
+        }
+
+        selectMenor.addEventListener('change', toggleTutorLegal);
+        toggleTutorLegal();
+    </script>
+</body>
+</html>
