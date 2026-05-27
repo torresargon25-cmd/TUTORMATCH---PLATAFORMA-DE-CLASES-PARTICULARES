@@ -26,7 +26,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body p-4">
 
-                <form th:action="${materia.id == null} ? @{/materia/save} : @{/materia/editar/{id}(id=${materia.id})}"
+                <form th:action="${materia.id == null} ? @{/materia/save} : @{/materia/guardar/{id}(id=${materia.id})}"
                       th:object="${materia}"
                       method="post">
 
