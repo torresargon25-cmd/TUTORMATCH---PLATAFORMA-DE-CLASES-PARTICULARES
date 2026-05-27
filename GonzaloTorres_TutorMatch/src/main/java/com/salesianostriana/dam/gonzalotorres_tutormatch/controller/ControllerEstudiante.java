@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Estudiante;
-import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Tutor;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.EstudianteService;
 
-import lombok.AllArgsConstructor;
+
 import lombok.RequiredArgsConstructor;
 
 
