@@ -1,10 +1,13 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.controller;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Controller;	
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -36,6 +39,16 @@ public class ControllerEstudiante {
 	public String save (@ModelAttribute Estudiante estudiante) {
 		estudianteService.save(estudiante);
 		return "redirect:/estudiante/listaEstudiantes";
+	}
+	@GetMapping("/delete/{id}")
+	public String borrar(@PathVariable Long id) {
+
+	    Optional<Estudiante> estudiante = estudianteService.findById(id);
+
+	    if (estudiante.isPresent()) {
+	        estudianteService.delete(estudiante.get());
+	    }
+	    return "redirect:/estudiante/listaEstudiantes";
 	}
 }
 	

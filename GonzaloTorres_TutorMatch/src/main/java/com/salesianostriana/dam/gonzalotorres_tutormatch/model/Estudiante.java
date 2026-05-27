@@ -31,7 +31,7 @@ public class Estudiante extends Usuario {
     private String apellidosTutorLeg;
     private String dniTutorLeg;
 
-    @OneToMany(mappedBy = "estudiante")
+    @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SesionTutoria> listaSesiones = new ArrayList<>();
    
 }
