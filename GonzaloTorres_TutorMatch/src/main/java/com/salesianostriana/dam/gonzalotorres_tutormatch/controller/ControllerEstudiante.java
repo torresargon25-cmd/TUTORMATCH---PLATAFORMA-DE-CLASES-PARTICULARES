@@ -50,6 +50,25 @@ public class ControllerEstudiante {
 	    }
 	    return "redirect:/estudiante/listaEstudiantes";
 	}
-}
+	@GetMapping("/editar/{id}")
+	public String editarFormEst (@PathVariable Long id, Model model) {
+		Optional<Estudiante> editEstudiante = estudianteService.findById(id);
+		
+		if(editEstudiante.isPresent()) {
+			model.addAttribute("estudiante", editEstudiante.get());
+			return "estudiante/form_estudiante";
+		}else {
+			return "redirect:estudiante/listEstudiantes";
+		}
+		
+	}
+	@PostMapping("/save/{id}")
+	public String editar(@PathVariable Long id, @ModelAttribute Estudiante estudiante) {
+	    estudiante.setId(id);
+	    estudianteService.edit(estudiante);
+	    return "redirect:/estudiante/listaEstudiantes";
+	}	
+	}
+
 	
 
