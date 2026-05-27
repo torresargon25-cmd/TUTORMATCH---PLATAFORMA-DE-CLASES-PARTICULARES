@@ -67,4 +67,13 @@ public class ControllerMateria {
 	        return "redirect:/materia/lista";
 	    }
 	
+	    @GetMapping("/detalle/{id}")
+	    public String detalle(@PathVariable Long id, Model model) {
+	        Optional<Materia> materia = materiaService.findById(id);
+	        if (materia.isPresent()) {
+	            model.addAttribute("materia", materia.get());
+	            return "materia/detaleMateria";
+	        }
+	        return "redirect:/materia/lista";
+	    }
 }
