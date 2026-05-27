@@ -67,7 +67,16 @@ public class ControllerEstudiante {
 	    estudiante.setId(id);
 	    estudianteService.edit(estudiante);
 	    return "redirect:/estudiante/listaEstudiantes";
-	}	
+	}
+	@GetMapping("/detalle/{id}")
+	public String detalleEstudiante(@PathVariable Long id, Model model) {
+	    Optional<Estudiante> estudiante = estudianteService.findById(id);
+	    if (estudiante.isPresent()) {
+	        model.addAttribute("estudiante", estudiante.get());
+	        return "estudiante/detaleEstudiante";
+	    }
+	    return "redirect:/estudiante/listEstudiantes";
+	}
 	}
 
 	
