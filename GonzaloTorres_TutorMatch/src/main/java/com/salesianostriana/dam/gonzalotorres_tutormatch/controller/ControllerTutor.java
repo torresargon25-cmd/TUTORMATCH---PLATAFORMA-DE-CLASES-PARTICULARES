@@ -67,4 +67,14 @@ public class ControllerTutor {
 	    tutorService.edit(tutor);
 	    return "redirect:/tutor/";
 	}
+	
+	@GetMapping("detalle/{id}")
+	public String detalleTutor(@PathVariable Long id, Model model) {
+	    Optional<Tutor> tutor = tutorService.findById(id);
+	    if (tutor.isPresent()) {
+	        model.addAttribute("tutor", tutor.get());
+	        return "tutor/detaleTutor";
+	    }
+	    return "redirect:/tutor/";
+	}
 }
