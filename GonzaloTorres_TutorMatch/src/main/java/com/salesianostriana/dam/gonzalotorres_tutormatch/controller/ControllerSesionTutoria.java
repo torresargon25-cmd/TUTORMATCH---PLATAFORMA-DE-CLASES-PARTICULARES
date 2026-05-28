@@ -129,4 +129,14 @@ public class ControllerSesionTutoria {
         sesionService.edit(sesion);
         return "redirect:/sesion/lista";
     }
+    
+    @GetMapping("/detalle/{id}")
+    public String detalle(@PathVariable Long id, Model model) {
+        Optional<SesionTutoria> sesion = sesionService.findById(id);
+        if (sesion.isPresent()) {
+            model.addAttribute("sesion", sesion.get());
+            return "sesion/detaleSesion";
+        }
+        return "redirect:/sesion/lista";
+    }
 }
