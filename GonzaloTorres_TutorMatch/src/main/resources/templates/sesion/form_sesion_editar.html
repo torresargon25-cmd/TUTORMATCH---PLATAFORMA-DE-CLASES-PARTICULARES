@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Sesión – TutorMatch</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; }</style>
+</head>
+<body>
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container mt-4">
+
+        <div class="mb-4">
+            <h1 class="h3 fw-bold mb-0">Editar sesión de tutoría</h1>
+            <p class="text-muted small mb-0">Modifica los datos de la sesión</p>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+
+                <form th:action="@{/sesion/save/{id}(id=${sesion.id})}" method="post">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Tutor</label>
+                            <select class="form-select" name="tutorId">
+                                <option th:each="tutor : ${tutores}"
+                                        th:value="${tutor.id}"
+                                        th:text="${tutor.nombre + ' ' + tutor.apellidos + ' (' + tutor.especialidad + ')'}"
+                                        th:selected="${tutor.id == sesion.tutor.id}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Estudiante</label>
+                            <select class="form-select" name="estudianteId">
+                                <option th:each="estudiante : ${estudiantes}"
+                                        th:value="${estudiante.id}"
+                                        th:text="${estudiante.nombre + ' ' + estudiante.apellidos}"
+                                        th:selected="${estudiante.id == sesion.estudiante.id}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Materia</label>
+                            <select class="form-select" name="materiaId">
+                                <option th:each="materia : ${materias}"
+                                        th:value="${materia.id}"
+                                        th:text="${materia.nombre}"
+                                        th:selected="${materia.id == sesion.materia.id}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Estado</label>
+                            <select class="form-select" name="estado">
+                                <option th:each="e : ${estados}"
+                                        th:value="${e}"
+                                        th:text="${e}"
+                                        th:selected="${e == sesion.estado}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Fecha y hora de inicio</label>
+                            <input type="datetime-local" class="form-control" name="fechaInicio"
+                                   th:value="${#temporals.format(sesion.fechaInicio, 'yyyy-MM-dd') + 'T' + #temporals.format(sesion.fechaInicio, 'HH:mm')}">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Fecha y hora de fin</label>
+                            <input type="datetime-local" class="form-control" name="fechaFin"
+                                   th:value="${#temporals.format(sesion.fechaFin, 'yyyy-MM-dd') + 'T' + #temporals.format(sesion.fechaFin, 'HH:mm')}">
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Observaciones</label>
+                            <textarea class="form-control" name="observaciones" rows="3"
+                                      th:text="${sesion.observaciones}"></textarea>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="alert alert-info small mb-0">
+                                <i class="bi bi-info-circle me-1"></i>
+                                El coste total se recalculará automáticamente al guardar.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle me-1"></i>Guardar cambios
+                        </button>
+                        <a th:href="@{/sesion/lista}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-1"></i>Cancelar
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

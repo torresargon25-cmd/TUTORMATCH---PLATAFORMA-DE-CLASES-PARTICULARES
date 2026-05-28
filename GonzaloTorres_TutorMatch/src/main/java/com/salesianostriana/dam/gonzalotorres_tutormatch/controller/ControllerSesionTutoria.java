@@ -85,4 +85,48 @@ public class ControllerSesionTutoria {
         }
         return "redirect:/sesion/lista";
     }
+    
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable Long id, Model model) {
+        Optional<SesionTutoria> sesion = sesionService.findById(id);
+        if (sesion.isPresent()) {
+            model.addAttribute("sesion", sesion.get());
+            model.addAttribute("tutores", tutorService.findAll());
+            model.addAttribute("estudiantes", estudianteService.findAll());
+            model.addAttribute("materias", materiaService.findAll());
+            model.addAttribute("estados", EstadoSesion.values());
+            return "sesion/form_sesion_editar";
+        }
+        return "redirect:/sesion/lista";
+    }
+    
+    @PostMapping("/save/{id}")
+    public String editar(
+            @PathVariable Long id,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaInicio,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaFin,
+            @RequestParam EstadoSesion estado,
+            @RequestParam(required = false) String observaciones,
+            @RequestParam Long tutorId,
+            @RequestParam Long estudianteId,
+            @RequestParam Long materiaId) {
+
+        Tutor tutor = tutorService.findById(tutorId).orElseThrow();
+        Estudiante estudiante = estudianteService.findById(estudianteId).orElseThrow();
+        Materia materia = materiaService.findById(materiaId).orElseThrow();
+
+        SesionTutoria sesion = SesionTutoria.builder()
+                .id(id)
+                .fechaInicio(fechaInicio)
+                .fechaFin(fechaFin)
+                .estado(estado)
+                .observaciones(observaciones)
+                .tutor(tutor)
+                .estudiante(estudiante)
+                .materia(materia)
+                .build();
+
+        sesionService.edit(sesion);
+        return "redirect:/sesion/lista";
+    }
 }
