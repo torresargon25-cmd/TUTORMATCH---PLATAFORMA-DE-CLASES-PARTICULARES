@@ -76,5 +76,13 @@ public class ControllerSesionTutoria {
         sesionService.save(sesion);
         return "redirect:/sesion/lista";
     }
-
+    
+    @GetMapping("/borrar/{id}")
+    public String borrar(@PathVariable Long id) {
+        Optional<SesionTutoria> sesion = sesionService.findById(id);
+        if (sesion.isPresent()) {
+            sesionService.delete(sesion.get());
+        }
+        return "redirect:/sesion/lista";
+    }
 }
