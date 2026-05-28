@@ -33,4 +33,12 @@ public class HomeController {
         model.addAttribute("totalSesiones", sesionTutoriaService.count());
         return "admin/index";
     }
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+    @GetMapping("/403")
+    public String accesoDenegado() {
+        return "403";
+    }
 }
