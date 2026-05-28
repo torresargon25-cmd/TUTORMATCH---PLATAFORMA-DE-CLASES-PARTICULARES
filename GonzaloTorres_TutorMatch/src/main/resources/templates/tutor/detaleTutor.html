@@ -1,126 +1,161 @@
-
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutores – TutorMatch</title>
+    <title>Detalle Tutor – TutorMatch</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; }
-    </style>
+    <style>body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; }</style>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-
 <body class="d-flex flex-column min-vh-100">
 
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
     <div class="container mt-4">
 
-       
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h1 class="h3 fw-bold mb-0">Tutores</h1>
-                <p class="text-muted small mb-0">Listado de todos los tutores registrados</p>
+        <div class="row g-4">
+
+            <!-- Tarjeta izquierda -->
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm text-center p-4">
+
+                    <img th:src="${tutor.imagen != null ? tutor.imagen : 'https://via.placeholder.com/120'}"
+                         class="rounded-circle mx-auto mb-3"
+                         width="120" height="120"
+                         style="object-fit: cover;"
+                         alt="Foto tutor">
+
+                    <h4 class="fw-bold mb-1" th:text="${tutor.nombre + ' ' + tutor.apellidos}">Nombre</h4>
+                    <p class="text-muted small mb-2" th:text="${tutor.especialidad}">Especialidad</p>
+
+                    <span class="badge mb-3"
+                          th:classappend="${tutor.rol != null and tutor.rol.name() == 'ADMIN'} ? 'bg-danger' : 'bg-primary'"
+                          th:text="${tutor.rol}">ROL</span>
+
+                    <div class="d-grid gap-2 mt-2">
+                        <a th:href="@{/tutor/editar/{id}(id=${tutor.id})}"
+                           class="btn btn-primary btn-sm">
+                            <i class="bi bi-pencil me-1"></i>Editar
+                        </a>
+                        <a th:href="@{/tutor/borrar/{id}(id=${tutor.id})}"
+                           class="btn btn-outline-danger btn-sm"
+                           onclick="return confirm('¿Seguro que quieres borrar este tutor?')">
+                            <i class="bi bi-trash me-1"></i>Borrar
+                        </a>
+                    </div>
+                </div>
             </div>
-            <a th:href="@{/tutor/new}" class="btn btn-primary">
-                <i class="bi bi-plus-circle me-1"></i>Nuevo tutor
-            </a>
-        </div>
 
-       
-        <div th:if="${mensajeExito}" class="alert alert-success alert-dismissible fade show">
-            <i class="bi bi-check-circle-fill me-2"></i>
-            <span th:text="${mensajeExito}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-        <div th:if="${mensajeError}" class="alert alert-danger alert-dismissible fade show">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            <span th:text="${mensajeError}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
+            <!-- Tarjeta derecha -->
+            <div class="col-md-8">
 
-        
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-0">
-                <table class="table table-hover mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Foto</th>
-                            <th>Nombre</th>
-                            <th>Especialidad</th>
-                            <th>Email</th>
-                            <th>Tarifa/h</th>
-                            <th>Puntuación</th>
-                            <th>Rol</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="align-middle">
-                                <img th:src="${tutor.imagen != null ? tutor.imagen : 'https://via.placeholder.com/40'}"
-                                     class="rounded-circle" width="40" height="40"
-                                     style="object-fit: cover;" alt="Foto tutor">
-                            </td>
-                            <td class="align-middle fw-semibold"
-                                th:text="${tutor.nombre + ' ' + tutor.apellidos}">Nombre</td>
-                            <td class="align-middle" th:text="${tutor.especialidad}">Especialidad</td>
-                            <td class="align-middle" th:text="${tutor.email}">Email</td>
-                            <td class="align-middle" th:text="${tutor.tarifaHora + ' €/h'}">0 €/h</td>
-                            <td class="align-middle">
-                                <span th:text="${tutor.puntuacionNivel != null ? tutor.puntuacionNivel : '—'}">0</span>
-                                <i class="bi bi-star-fill text-warning small" th:if="${tutor.puntuacionNivel != null}"></i>
-                            </td>
-                            <td class="align-middle">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom fw-bold py-3">
+                        <i class="bi bi-person-badge me-2 text-primary"></i>Datos personales
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <p class="text-muted small mb-1">Nombre</p>
+                                <p class="fw-semibold mb-0" th:text="${tutor.nombre}">—</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-muted small mb-1">Apellidos</p>
+                                <p class="fw-semibold mb-0" th:text="${tutor.apellidos}">—</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-muted small mb-1">Email</p>
+                                <p class="fw-semibold mb-0" th:text="${tutor.email}">—</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-muted small mb-1">DNI</p>
+                                <p class="fw-semibold mb-0" th:text="${tutor.dni}">—</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom fw-bold py-3">
+                        <i class="bi bi-briefcase me-2 text-primary"></i>Datos profesionales
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <p class="text-muted small mb-1">Especialidad</p>
+                                <p class="fw-semibold mb-0" th:text="${tutor.especialidad}">—</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-muted small mb-1">Tarifa por hora</p>
+                                <p class="fw-semibold mb-0" th:text="${tutor.tarifaHora != null ? tutor.tarifaHora + ' €/h' : '—'}">—</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-muted small mb-1">Puntuación</p>
+                                <p class="fw-semibold mb-0" th:text="${tutor.puntuacionNivel != null ? tutor.puntuacionNivel : '—'}">—</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-muted small mb-1">Rol</p>
                                 <span class="badge"
-                                      th:classappend="${tutor.rol.name() == 'ADMIN'} ? 'bg-danger' : 'bg-primary'"
-                                      th:text="${tutor.rol}">ROL</span>
-                            </td>
-                            <td class="align-middle">
-                                <div class="d-flex gap-1">
-                                    <a th:href="@{/tutor/detalle/{id}(id=${tutor.id})}"
-                                       class="btn btn-outline-secondary btn-sm">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                    <a th:href="@{/tutor/editar/{id}(id=${tutor.id})}"
-                                       class="btn btn-outline-primary btn-sm">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <a th:href="@{/tutor/borrar/{id}(id=${tutor.id})}"
-                                       class="btn btn-outline-danger btn-sm"
-                                       onclick="return confirm('¿Seguro que quieres borrar este tutor?')">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                                      th:classappend="${tutor.rol != null and tutor.rol.name() == 'ADMIN'} ? 'bg-danger' : 'bg-primary'"
+                                      th:text="${tutor.rol}">—</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <tr th:if="${tutor == null}">
-                            <td colspan="8" class="text-center text-muted py-4">
-                                <i class="bi bi-person-x fs-3 d-block mb-2"></i>
-                                No hay tutores registrados todavía.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <!-- Sesiones asociadas -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom fw-bold py-3">
+                        <i class="bi bi-calendar-check me-2 text-primary"></i>Sesiones de tutoría
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Estudiante</th>
+                                    <th>Materia</th>
+                                    <th>Inicio</th>
+                                    <th>Estado</th>
+                                    <th>Coste</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="sesion : ${tutor.sesiones}">
+                                    <td th:text="${sesion.estudiante.nombre + ' ' + sesion.estudiante.apellidos}">—</td>
+                                    <td th:text="${sesion.materia.nombre}">—</td>
+                                    <td th:text="${#temporals.format(sesion.fechaInicio, 'dd/MM/yyyy HH:mm')}">—</td>
+                                    <td>
+                                        <span class="badge"
+                                              th:classappend="${sesion.estado.name() == 'PROGRAMADA'} ? 'bg-primary' :
+                                                              (${sesion.estado.name() == 'FINALIZADA'} ? 'bg-success' : 'bg-danger')"
+                                              th:text="${sesion.estado}">—</span>
+                                    </td>
+                                    <td th:text="${sesion.costeTotal != null ? sesion.costeTotal + ' €' : '—'}">—</td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(tutor.sesiones)}">
+                                    <td colspan="5" class="text-center text-muted py-3">
+                                        Sin sesiones asignadas todavía.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
 
         <div class="mt-3">
-            <a th:href="@{/admin/}" class="btn btn-outline-secondary btn-sm">
-                <i class="bi bi-arrow-left me-1"></i>Volver al panel
+            <a th:href="@{/tutor/}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i>Volver al listado
             </a>
         </div>
 
     </div>
 
     <div th:replace="~{fragments/footer :: footer}"></div>
-
     
-
 </body>
 </html>
