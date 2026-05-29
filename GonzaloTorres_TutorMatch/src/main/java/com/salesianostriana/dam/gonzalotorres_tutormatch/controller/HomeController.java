@@ -33,7 +33,7 @@ public class HomeController {
         model.addAttribute("totalSesiones", sesionTutoriaService.count());
         return "admin/index";
     }
-    @GetMapping("/login")
+    @GetMapping("/auth/login")
     public String login() {
         return "login";
     }
