@@ -17,18 +17,14 @@ import com.salesianostriana.dam.gonzalotorres_tutormatch.enums.Rol;
 @Table(name = "tutor")
 @PrimaryKeyJoinColumn(name = "id")
 @EqualsAndHashCode(callSuper = false)
-public class Tutor extends Usuario {
+public class Tutor extends Usuario{
 
     private String dni;
     private String especialidad;
     private Double tarifaHora;
     private Double puntuacionNivel;
     private String imagen;
-    
-    @Enumerated(EnumType.STRING)
-    private Rol rol;
-    
-
+   
     @OneToMany(mappedBy = "tutor")
     private List<SesionTutoria> sesiones = new ArrayList<>();
 }
