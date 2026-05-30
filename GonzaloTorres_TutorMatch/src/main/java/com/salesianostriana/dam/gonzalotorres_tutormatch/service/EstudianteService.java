@@ -21,8 +21,6 @@ import lombok.RequiredArgsConstructor;
 public class EstudianteService extends BaseServiceImpl<Estudiante, Long, EstudianteRepository>{
 
 	
-	
-	
 	private EstudianteRepository estudianterepository;
 	
 	

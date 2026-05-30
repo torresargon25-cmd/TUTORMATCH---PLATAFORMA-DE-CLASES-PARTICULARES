@@ -4,16 +4,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -21,51 +23,36 @@ public class SecurityConfig {
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsManager() {
-        UserDetails admin = User.builder()
-                .username("admin@admin.com")
-                .password(passwordEncoder().encode("admin"))
-                .roles("ADMIN")
-                .build();
-
-        UserDetails user = User.builder()
-                .username("user@user.com")
-                .password(passwordEncoder().encode("user"))
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin, user);
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                .requestMatchers("/css/**", "/js/**", "/img/**", "/webjars/**").permitAll()
+                .requestMatchers("/", "/auth/login", "/403").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers("/login", "/403").permitAll()
                 .requestMatchers("/admin/**", "/tutor/**", "/materia/**", "/sesion/**").hasRole("ADMIN")
-                .requestMatchers("/estudiante/**").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/estudiante/**").hasAnyRole("ADMIN", "TUTOR", "ESTUDIANTE")
                 .anyRequest().authenticated()
             )
+            .requestCache(cache -> {
+                HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+                requestCache.setMatchingRequestParameterName(null);
+                cache.requestCache(requestCache);
+            })
             .formLogin(form -> form
-                .loginPage("/login")
+                .loginPage("/auth/login")
+                .loginProcessingUrl("/auth/login")
                 .defaultSuccessUrl("/admin/", true)
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
+                .failureUrl("/auth/login?error")
                 .permitAll()
             )
             .exceptionHandling(ex -> ex
-                .accessDeniedPage("/403")
+                .accessDeniedHandler(customAccessDeniedHandler)
             )
             .csrf(csrf -> csrf
                 .ignoringRequestMatchers("/h2-console/**")
             )
             .headers(headers -> headers
-                .frameOptions(frame -> frame.sameOrigin())
+                .frameOptions(frame -> frame.disable())
             );
 
         return http.build();
