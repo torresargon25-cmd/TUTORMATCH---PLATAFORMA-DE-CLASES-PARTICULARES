@@ -27,5 +27,7 @@ public abstract class Usuario {
 
     protected String password;
 
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
 	
 }

@@ -25,10 +25,6 @@ public class Tutor extends Usuario {
     private Double puntuacionNivel;
     private String imagen;
     
-    @Enumerated(EnumType.STRING)
-    private Rol rol;
-    
-
     @OneToMany(mappedBy = "tutor")
     private List<SesionTutoria> sesiones = new ArrayList<>();
 }
