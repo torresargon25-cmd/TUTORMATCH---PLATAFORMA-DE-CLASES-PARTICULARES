@@ -57,7 +57,17 @@ public class ControllerSesionTutoria {
             @RequestParam(required = false) String observaciones,
             @RequestParam Long tutorId,
             @RequestParam Long estudianteId,
-            @RequestParam Long materiaId) {
+            @RequestParam Long materiaId,
+            Model model) {
+
+        if (fechaFin.isBefore(fechaInicio) || fechaFin.isEqual(fechaInicio)) {
+            model.addAttribute("tutores", tutorService.findAll());
+            model.addAttribute("estudiantes", estudianteService.findAll());
+            model.addAttribute("materias", materiaService.findAll());
+            model.addAttribute("estados", EstadoSesion.values());
+            model.addAttribute("errorFecha", "La fecha de fin debe ser posterior a la fecha de inicio");
+            return "sesion/form_sesion";
+        }
 
         Tutor tutor = tutorService.findById(tutorId).orElseThrow();
         Estudiante estudiante = estudianteService.findById(estudianteId).orElseThrow();
@@ -76,7 +86,7 @@ public class ControllerSesionTutoria {
         sesionService.save(sesion);
         return "redirect:/sesion/lista";
     }
-    
+
     @GetMapping("/borrar/{id}")
     public String borrar(@PathVariable Long id) {
         Optional<SesionTutoria> sesion = sesionService.findById(id);
@@ -85,7 +95,7 @@ public class ControllerSesionTutoria {
         }
         return "redirect:/sesion/lista";
     }
-    
+
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         Optional<SesionTutoria> sesion = sesionService.findById(id);
@@ -99,7 +109,7 @@ public class ControllerSesionTutoria {
         }
         return "redirect:/sesion/lista";
     }
-    
+
     @PostMapping("/save/{id}")
     public String editar(
             @PathVariable Long id,
@@ -109,7 +119,18 @@ public class ControllerSesionTutoria {
             @RequestParam(required = false) String observaciones,
             @RequestParam Long tutorId,
             @RequestParam Long estudianteId,
-            @RequestParam Long materiaId) {
+            @RequestParam Long materiaId,
+            Model model) {
+
+        if (fechaFin.isBefore(fechaInicio) || fechaFin.isEqual(fechaInicio)) {
+            model.addAttribute("sesion", sesionService.findById(id).orElseThrow());
+            model.addAttribute("tutores", tutorService.findAll());
+            model.addAttribute("estudiantes", estudianteService.findAll());
+            model.addAttribute("materias", materiaService.findAll());
+            model.addAttribute("estados", EstadoSesion.values());
+            model.addAttribute("errorFecha", "La fecha de fin debe ser posterior a la fecha de inicio");
+            return "sesion/form_sesion_editar";
+        }
 
         Tutor tutor = tutorService.findById(tutorId).orElseThrow();
         Estudiante estudiante = estudianteService.findById(estudianteId).orElseThrow();
@@ -129,7 +150,7 @@ public class ControllerSesionTutoria {
         sesionService.edit(sesion);
         return "redirect:/sesion/lista";
     }
-    
+
     @GetMapping("/detalle/{id}")
     public String detalle(@PathVariable Long id, Model model) {
         Optional<SesionTutoria> sesion = sesionService.findById(id);
