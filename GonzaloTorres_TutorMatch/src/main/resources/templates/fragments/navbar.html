@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -9,7 +10,7 @@
 
     <div class="container">
 
-        <a class="navbar-brand fw-bold" th:href="@{/}">
+        <a class="navbar-brand fw-bold" th:href="@{/home}">
             <i class="bi bi-mortarboard-fill me-2"></i>TutorMatch
         </a>
 
@@ -22,91 +23,91 @@
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                <!-- Solo ADMIN ve el panel -->
+                
                 <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/admin/}">
                         <i class="bi bi-speedometer2 me-1"></i>Panel
                     </a>
                 </li>
 
-                <!-- Solo ADMIN ve tutores -->
                 <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link dropdown-toggle" href="#"
-                       role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                         <i class="bi bi-person-badge me-1"></i>Tutores
                     </a>
                     <ul class="dropdown-menu shadow border-0 rounded-3">
-                        <li>
-                            <a class="dropdown-item" th:href="@{/tutor/}">
-                                <i class="bi bi-list-ul text-primary me-2"></i>Ver listado
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" th:href="@{/tutor/new}">
-                                <i class="bi bi-plus-circle text-success me-2"></i>Nuevo tutor
-                            </a>
-                        </li>
+                        <li><a class="dropdown-item" th:href="@{/tutor/}">
+                            <i class="bi bi-list-ul text-primary me-2"></i>Ver listado</a></li>
+                        <li><a class="dropdown-item" th:href="@{/tutor/new}">
+                            <i class="bi bi-plus-circle text-success me-2"></i>Nuevo tutor</a></li>
                     </ul>
                 </li>
 
-                <!-- ADMIN, TUTOR y ESTUDIANTE ven estudiantes -->
-                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                    <a class="nav-link dropdown-toggle" href="#"
-                       role="button" data-bs-toggle="dropdown">
+                <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                         <i class="bi bi-people me-1"></i>Estudiantes
                     </a>
                     <ul class="dropdown-menu shadow border-0 rounded-3">
-                        <li>
-                            <a class="dropdown-item" th:href="@{/estudiante/listaEstudiantes}">
-                                <i class="bi bi-list-ul text-primary me-2"></i>Ver listado
-                            </a>
-                        </li>
-                        <li sec:authorize="hasRole('ADMIN')">
-                            <a class="dropdown-item" th:href="@{/estudiante/add}">
-                                <i class="bi bi-plus-circle text-success me-2"></i>Nuevo estudiante
-                            </a>
-                        </li>
+                        <li><a class="dropdown-item" th:href="@{/estudiante/listaEstudiantes}">
+                            <i class="bi bi-list-ul text-primary me-2"></i>Ver listado</a></li>
+                        <li><a class="dropdown-item" th:href="@{/estudiante/add}">
+                            <i class="bi bi-plus-circle text-success me-2"></i>Nuevo estudiante</a></li>
                     </ul>
                 </li>
 
-                <!-- Solo ADMIN ve materias -->
                 <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link dropdown-toggle" href="#"
-                       role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                         <i class="bi bi-book me-1"></i>Materias
                     </a>
                     <ul class="dropdown-menu shadow border-0 rounded-3">
-                        <li>
-                            <a class="dropdown-item" th:href="@{/materia/lista}">
-                                <i class="bi bi-list-ul text-primary me-2"></i>Ver listado
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" th:href="@{/materia/add}">
-                                <i class="bi bi-plus-circle text-success me-2"></i>Nueva materia
-                            </a>
-                        </li>
+                        <li><a class="dropdown-item" th:href="@{/materia/lista}">
+                            <i class="bi bi-list-ul text-primary me-2"></i>Ver listado</a></li>
+                        <li><a class="dropdown-item" th:href="@{/materia/add}">
+                            <i class="bi bi-plus-circle text-success me-2"></i>Nueva materia</a></li>
                     </ul>
                 </li>
 
-                <!-- Solo ADMIN ve sesiones -->
                 <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link dropdown-toggle" href="#"
-                       role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                         <i class="bi bi-calendar-check me-1"></i>Sesiones
                     </a>
                     <ul class="dropdown-menu shadow border-0 rounded-3">
-                        <li>
-                            <a class="dropdown-item" th:href="@{/sesion/lista}">
-                                <i class="bi bi-list-ul text-primary me-2"></i>Ver listado
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" th:href="@{/sesion/add}">
-                                <i class="bi bi-plus-circle text-success me-2"></i>Nueva sesión
-                            </a>
-                        </li>
+                        <li><a class="dropdown-item" th:href="@{/sesion/lista}">
+                            <i class="bi bi-list-ul text-primary me-2"></i>Ver listado</a></li>
+                        <li><a class="dropdown-item" th:href="@{/sesion/add}">
+                            <i class="bi bi-plus-circle text-success me-2"></i>Nueva sesión</a></li>
                     </ul>
+                </li>
+
+                
+                <li class="nav-item" sec:authorize="hasRole('TUTOR')">
+                    <a class="nav-link" th:href="@{/sesion/lista}">
+                        <i class="bi bi-calendar-check me-1"></i>Mis sesiones
+                    </a>
+                </li>
+
+                <li class="nav-item" sec:authorize="hasRole('TUTOR')">
+                    <a class="nav-link" th:href="@{/estudiante/listaEstudiantes}">
+                        <i class="bi bi-people me-1"></i>Mis estudiantes
+                    </a>
+                </li>
+
+                
+                <li class="nav-item" sec:authorize="hasRole('ESTUDIANTE')">
+                    <a class="nav-link" th:href="@{/tutor/buscar}">
+                        <i class="bi bi-search me-1"></i>Buscar tutor
+                    </a>
+                </li>
+
+                <li class="nav-item" sec:authorize="hasRole('ESTUDIANTE')">
+                    <a class="nav-link" th:href="@{/sesion/mis-sesiones}">
+                        <i class="bi bi-calendar-check me-1"></i>Mis clases
+                    </a>
+                </li>
+
+                <li class="nav-item" sec:authorize="hasRole('ESTUDIANTE')">
+                    <a class="nav-link" th:href="@{/estudiante/mi-perfil}">
+                        <i class="bi bi-person-circle me-1"></i>Mi perfil
+                    </a>
                 </li>
 
             </ul>

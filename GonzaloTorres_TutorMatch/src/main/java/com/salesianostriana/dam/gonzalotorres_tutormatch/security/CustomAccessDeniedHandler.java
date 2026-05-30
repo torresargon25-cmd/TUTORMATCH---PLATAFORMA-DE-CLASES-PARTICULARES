@@ -27,11 +27,11 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
                 || uri.startsWith("/materia") || uri.startsWith("/sesion")) {
             flashMap.put("errorAcceso",
                 "No tienes permisos de administrador para acceder a esa sección.");
-            target = "/";
+            target = "/403";
         } else {
             flashMap.put("errorAcceso",
                 "No tienes permiso para acceder a esa página.");
-            target = "/";
+            target = "/403";
         }
  
         new SessionFlashMapManager().saveOutputFlashMap(flashMap, request, response);

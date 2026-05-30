@@ -41,5 +41,12 @@ public class HomeController {
     public String accesoDenegado() {
         return "403";
     }
-    
+    @GetMapping("/home")
+    public String home(Model model) {
+        model.addAttribute("totalTutores", tutorService.count());
+        model.addAttribute("totalEstudiantes", estudianteService.count());
+        model.addAttribute("totalMaterias", materiaService.count());
+        model.addAttribute("totalSesiones", sesionTutoriaService.count());
+        return "home";
+    }
 }

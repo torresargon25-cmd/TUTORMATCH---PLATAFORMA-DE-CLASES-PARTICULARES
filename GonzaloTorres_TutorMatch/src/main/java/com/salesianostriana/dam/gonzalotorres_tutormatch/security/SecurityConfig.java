@@ -33,15 +33,11 @@ public class SecurityConfig {
                 .requestMatchers("/estudiante/**").hasAnyRole("ADMIN", "TUTOR", "ESTUDIANTE")
                 .anyRequest().authenticated()
             )
-            .requestCache(cache -> {
-                HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
-                requestCache.setMatchingRequestParameterName(null);
-                cache.requestCache(requestCache);
-            })
+            
             .formLogin(form -> form
                 .loginPage("/auth/login")
                 .loginProcessingUrl("/auth/login")
-                .defaultSuccessUrl("/admin/", true)
+                .defaultSuccessUrl("/home", true)
                 .failureUrl("/auth/login?error")
                 .permitAll()
             )
