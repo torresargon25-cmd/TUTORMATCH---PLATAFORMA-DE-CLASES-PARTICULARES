@@ -1,6 +1,6 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.controller;
 
-import java.util.Optional;
+import java.util.Optional;	
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +32,7 @@ public class ControllerTutor {
         if (result.hasErrors()) {
             return "tutor/form_tutor";
         }
+        tutorService.validarTarifa(tutor.getTarifaHora());
         tutorService.save(tutor);
         return "redirect:/tutor/";
     }
@@ -66,11 +67,11 @@ public class ControllerTutor {
         if (result.hasErrors()) {
             return "tutor/form_tutor";
         }
+        tutorService.validarTarifa(tutor.getTarifaHora());
         tutor.setId(id);
         tutorService.edit(tutor);
         return "redirect:/tutor/";
     }
-
     @GetMapping("detalle/{id}")
     public String detalleTutor(@PathVariable Long id, Model model) {
         Optional<Tutor> tutor = tutorService.findById(id);

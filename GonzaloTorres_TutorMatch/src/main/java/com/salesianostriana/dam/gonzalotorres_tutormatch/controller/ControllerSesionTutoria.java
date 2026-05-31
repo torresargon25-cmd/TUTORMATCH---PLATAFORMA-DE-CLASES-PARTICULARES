@@ -73,6 +73,9 @@ public class ControllerSesionTutoria {
         Estudiante estudiante = estudianteService.findById(estudianteId).orElseThrow();
         Materia materia = materiaService.findById(materiaId).orElseThrow();
 
+        sesionService.validarDuracion(fechaInicio, fechaFin);
+        sesionService.validarNivelEstudiante(estudiante, materia);
+
         SesionTutoria sesion = SesionTutoria.builder()
                 .fechaInicio(fechaInicio)
                 .fechaFin(fechaFin)
@@ -135,6 +138,9 @@ public class ControllerSesionTutoria {
         Tutor tutor = tutorService.findById(tutorId).orElseThrow();
         Estudiante estudiante = estudianteService.findById(estudianteId).orElseThrow();
         Materia materia = materiaService.findById(materiaId).orElseThrow();
+
+        sesionService.validarDuracion(fechaInicio, fechaFin);
+        sesionService.validarNivelEstudiante(estudiante, materia);
 
         SesionTutoria sesion = SesionTutoria.builder()
                 .id(id)

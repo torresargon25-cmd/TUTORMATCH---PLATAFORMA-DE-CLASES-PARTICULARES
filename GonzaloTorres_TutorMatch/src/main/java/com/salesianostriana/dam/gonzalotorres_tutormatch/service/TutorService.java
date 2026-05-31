@@ -1,18 +1,22 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.service;
 
 import org.springframework.stereotype.Service;
-
-import com.salesianostriana.dam.gonzalotorres_tutormatch.model.SesionTutoria;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.exception.TarifaInvalidaException;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Tutor;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.repository.TutorRepository;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.base.BaseServiceImpl;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class TutorService extends BaseServiceImpl<Tutor, Long, TutorRepository>{
+public class TutorService extends BaseServiceImpl<Tutor, Long, TutorRepository> {
 
-	private SesionTutoria sesiontutoria;
-	
+    public void validarTarifa(Double tarifaHora) {
+        if (tarifaHora == null || tarifaHora <= 0) {
+            throw new TarifaInvalidaException("La tarifa por hora debe ser mayor que 0");
+        }
+        if (tarifaHora > 500) {
+            throw new TarifaInvalidaException("La tarifa por hora no puede superar los 500 €");
+        }
+    }
 }
