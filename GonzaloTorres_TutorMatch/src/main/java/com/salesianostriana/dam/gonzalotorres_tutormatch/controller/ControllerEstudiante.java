@@ -1,6 +1,8 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.controller;
 
 import java.util.Optional;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -79,6 +81,14 @@ public class ControllerEstudiante {
             return "estudiante/detaleEstudiante";
         }
         return "redirect:/estudiante/listaEstudiantes";
+    }
+    
+    @GetMapping("/mi-perfil")
+    public String miPerfil(Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Estudiante estudiante = estudianteService.buscarPorUsername(username).orElseThrow();
+        model.addAttribute("estudiante", estudiante);
+        return "estudiante/miPerfil";
     }
 }
 	

@@ -1,9 +1,11 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,6 +77,7 @@ public class ControllerSesionTutoria {
 
         sesionService.validarDuracion(fechaInicio, fechaFin);
         sesionService.validarNivelEstudiante(estudiante, materia);
+        sesionService.validarSolapamiento(tutorId, estudianteId, fechaInicio, fechaFin);
 
         SesionTutoria sesion = SesionTutoria.builder()
                 .fechaInicio(fechaInicio)
@@ -86,6 +89,7 @@ public class ControllerSesionTutoria {
                 .materia(materia)
                 .build();
 
+        sesionService.calcularCoste(sesion);
         sesionService.save(sesion);
         return "redirect:/sesion/lista";
     }
@@ -141,6 +145,7 @@ public class ControllerSesionTutoria {
 
         sesionService.validarDuracion(fechaInicio, fechaFin);
         sesionService.validarNivelEstudiante(estudiante, materia);
+        sesionService.validarSolapamientoEdicion(tutorId, estudianteId, id, fechaInicio, fechaFin);
 
         SesionTutoria sesion = SesionTutoria.builder()
                 .id(id)
@@ -153,6 +158,7 @@ public class ControllerSesionTutoria {
                 .materia(materia)
                 .build();
 
+        sesionService.calcularCoste(sesion);
         sesionService.edit(sesion);
         return "redirect:/sesion/lista";
     }
@@ -166,4 +172,48 @@ public class ControllerSesionTutoria {
         }
         return "redirect:/sesion/lista";
     }
+
+    @GetMapping("/mis-sesiones")
+    public String misSesiones(@RequestParam(required = false) EstadoSesion estado, Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<SesionTutoria> sesiones;
+        if (estado != null) {
+            sesiones = sesionService.findMisSesionesPorEstado(username, estado);
+        } else {
+            sesiones = sesionService.findMisSesiones(username);
+        }
+        model.addAttribute("sesiones", sesiones);
+        return "sesion/mis_sesiones";
+    }
+
+    @PostMapping("/reservar")
+    public String reservar(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaInicio,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaFin,
+            @RequestParam Long tutorId,
+            @RequestParam Long materiaId) {
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Estudiante estudiante = estudianteService.buscarPorUsername(username).orElseThrow();
+        Tutor tutor = tutorService.findById(tutorId).orElseThrow();
+        Materia materia = materiaService.findById(materiaId).orElseThrow();
+
+        sesionService.validarDuracion(fechaInicio, fechaFin);
+        sesionService.validarNivelEstudiante(estudiante, materia);
+        sesionService.validarSolapamiento(tutorId, estudiante.getId(), fechaInicio, fechaFin);
+
+        SesionTutoria sesion = SesionTutoria.builder()
+                .fechaInicio(fechaInicio)
+                .fechaFin(fechaFin)
+                .estado(EstadoSesion.PROGRAMADA)
+                .tutor(tutor)
+                .estudiante(estudiante)
+                .materia(materia)
+                .build();
+
+        sesionService.calcularCoste(sesion);
+        sesionService.save(sesion);
+        return "redirect:/sesion/mis-sesiones";
+    }
 }
+

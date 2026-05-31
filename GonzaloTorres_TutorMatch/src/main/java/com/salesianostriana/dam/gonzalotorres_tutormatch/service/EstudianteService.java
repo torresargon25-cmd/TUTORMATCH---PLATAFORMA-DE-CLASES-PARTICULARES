@@ -21,8 +21,10 @@ import lombok.RequiredArgsConstructor;
 public class EstudianteService extends BaseServiceImpl<Estudiante, Long, EstudianteRepository>{
 
 	
-	private EstudianteRepository estudianterepository;
+	private final EstudianteRepository estudianterepository;
 	
-	
+	public Optional<Estudiante> buscarPorUsername(String username) {
+	    return estudianterepository.findByUsername(username);
+	}
 	
 }

@@ -1,6 +1,10 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.controller;
 
-import java.util.Optional;	
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,8 +13,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.salesianostriana.dam.gonzalotorres_tutormatch.model.SesionTutoria;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Tutor;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.service.MateriaService;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.service.SesionTutoriaService;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.TutorService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +30,8 @@ import lombok.RequiredArgsConstructor;
 public class ControllerTutor {
 
     private final TutorService tutorService;
+    private final SesionTutoriaService sesionService;
+    private final MateriaService materiaService;
 
     @GetMapping("/new")
     public String addTutor(Model model) {
@@ -72,6 +84,7 @@ public class ControllerTutor {
         tutorService.edit(tutor);
         return "redirect:/tutor/";
     }
+
     @GetMapping("detalle/{id}")
     public String detalleTutor(@PathVariable Long id, Model model) {
         Optional<Tutor> tutor = tutorService.findById(id);
@@ -80,5 +93,32 @@ public class ControllerTutor {
             return "tutor/detaleTutor";
         }
         return "redirect:/tutor/";
+    }
+
+    @GetMapping("/reservar/{id}")
+    public String verTutorParaReservar(@PathVariable Long id, Model model) {
+        Tutor tutor = tutorService.findById(id).orElseThrow();
+        model.addAttribute("tutor", tutor);
+        model.addAttribute("materias", materiaService.findAll());
+        model.addAttribute("sesionesOcupadas", sesionService.findSesionesProgramadasPorTutor(id));
+        return "tutor/detaleTutorEstudiante";
+    }
+
+    @GetMapping("/buscar")
+    public String buscar(@RequestParam(required = false) String especialidad, Model model) {
+        List<Tutor> tutores = (especialidad != null && !especialidad.isBlank())
+                ? tutorService.buscarPorEspecialidad(especialidad)
+                : tutorService.findAll();
+
+        Map<Long, List<SesionTutoria>> sesionesPorTutor = tutores.stream()
+                .collect(Collectors.toMap(
+                        Tutor::getId,
+                        t -> sesionService.findSesionesProgramadasPorTutor(t.getId())
+                ));
+
+        model.addAttribute("tutores", tutores);
+        model.addAttribute("sesionesPorTutor", sesionesPorTutor);
+        model.addAttribute("especialidad", especialidad);
+        return "tutor/buscarTutor";
     }
 }

@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.exception.TarifaInvalidaException;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Tutor;
@@ -18,5 +20,9 @@ public class TutorService extends BaseServiceImpl<Tutor, Long, TutorRepository> 
         if (tarifaHora > 500) {
             throw new TarifaInvalidaException("La tarifa por hora no puede superar los 500 €");
         }
+    }
+    
+    public List<Tutor> buscarPorEspecialidad(String especialidad) {
+        return repository.findByEspecialidadContains(especialidad);
     }
 }

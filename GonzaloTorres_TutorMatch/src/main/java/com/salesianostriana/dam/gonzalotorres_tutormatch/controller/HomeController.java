@@ -1,9 +1,11 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.salesianostriana.dam.gonzalotorres_tutormatch.model.SesionTutoria;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.EstudianteService;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.MateriaService;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.SesionTutoriaService;
@@ -33,20 +35,32 @@ public class HomeController {
         model.addAttribute("totalSesiones", sesionTutoriaService.count());
         return "admin/index";
     }
+
     @GetMapping("/auth/login")
     public String login() {
         return "login";
     }
+
     @GetMapping("/403")
     public String accesoDenegado() {
         return "403";
     }
+
     @GetMapping("/home")
     public String home(Model model) {
         model.addAttribute("totalTutores", tutorService.count());
         model.addAttribute("totalEstudiantes", estudianteService.count());
         model.addAttribute("totalMaterias", materiaService.count());
         model.addAttribute("totalSesiones", sesionTutoriaService.count());
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        double costeMensual = sesionTutoriaService.findMisSesiones(username)
+                .stream()
+                .filter(s -> s.getCosteTotal() != null)
+                .mapToDouble(SesionTutoria::getCosteTotal)
+                .sum();
+        model.addAttribute("costeMensual", costeMensual);
+
         return "home";
     }
 }
