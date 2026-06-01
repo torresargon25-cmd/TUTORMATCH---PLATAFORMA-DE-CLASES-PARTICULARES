@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.exception.TarifaInvalidaException;
@@ -28,5 +29,9 @@ public class TutorService extends BaseServiceImpl<Tutor, Long, TutorRepository> 
     
     public List<Object[]> findTutoresConMasSesiones() {
         return repository.findTutoresConMasSesiones();
+    }
+    
+    public Optional<Tutor> buscarPorUsername(String username) {
+        return repository.findByUsername(username);
     }
 }

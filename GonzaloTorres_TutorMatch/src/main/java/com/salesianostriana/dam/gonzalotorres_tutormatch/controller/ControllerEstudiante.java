@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Estudiante;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.EstudianteService;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.service.SesionTutoriaService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class ControllerEstudiante {
 
     private final EstudianteService estudianteService;
-
+    private final SesionTutoriaService sesionTutoriaService;
+    
     @GetMapping("listaEstudiantes")
     public String listEstudiantes(Model model) {
         model.addAttribute("estudiantes", estudianteService.findAll());
@@ -89,6 +92,13 @@ public class ControllerEstudiante {
         Estudiante estudiante = estudianteService.buscarPorUsername(username).orElseThrow();
         model.addAttribute("estudiante", estudiante);
         return "estudiante/miPerfil";
+    }
+    
+    @GetMapping("/mis-estudiantes")
+    public String misEstudiantes(Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("estudiantes", sesionTutoriaService.findMisEstudiantes(username));
+        return "estudiante/misEstudiantesTutor";
     }
 }
 	

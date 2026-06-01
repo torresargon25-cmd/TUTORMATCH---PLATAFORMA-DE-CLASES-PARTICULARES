@@ -229,5 +229,12 @@ public class ControllerSesionTutoria {
         }
         return "sesion/entreFechas";
     }
+    
+    @GetMapping("/mis-sesiones-tutor")
+    public String misSesionesTutor(Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("sesiones", sesionService.findMisSesionesTutor(username));
+        return "sesion/misSesionesTutor";
+    }
 }
 

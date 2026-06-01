@@ -68,7 +68,7 @@
                 </div>
             </div>
 
-            <!-- Estadísticas -->
+            <!-- Fila 1: tutores + materias -->
             <div class="row g-4 mb-4">
                 <div class="col-md-6">
                     <div class="card border-0 shadow-sm h-100">
@@ -109,6 +109,33 @@
                                 <tbody>
                                     <tr th:each="fila : ${materiasMasDemandadas}">
                                         <td th:text="${fila[0].nombre}">—</td>
+                                        <td class="text-center fw-bold" th:text="${fila[1]}">0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila 2: estudiantes con más tutorías -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-white border-bottom fw-bold py-3">
+                            <i class="bi bi-mortarboard text-success me-2"></i>Estudiantes con más tutorías
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Estudiante</th>
+                                        <th class="text-center">Tutorías</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="fila : ${estudiantesConMasTutorias}">
+                                        <td th:text="${fila[0].nombre + ' ' + fila[0].apellidos}">—</td>
                                         <td class="text-center fw-bold" th:text="${fila[1]}">0</td>
                                     </tr>
                                 </tbody>
@@ -173,7 +200,7 @@
                         <div class="card-body">
                             <p class="text-muted small">Consulta y gestiona tus sesiones de tutoría.</p>
                             <div class="d-flex gap-2">
-                                <a th:href="@{/sesion/lista}" class="btn btn-primary btn-sm">
+                                <a th:href="@{/sesion/mis-sesiones-tutor}" class="btn btn-primary btn-sm">
                                     <i class="bi bi-list-ul me-1"></i>Ver todas
                                 </a>
                                 <a th:href="@{/sesion/lista?estado=PROGRAMADA}" class="btn btn-outline-primary btn-sm">
@@ -190,7 +217,7 @@
                         </div>
                         <div class="card-body">
                             <p class="text-muted small">Consulta los estudiantes con los que trabajas.</p>
-                            <a th:href="@{/estudiante/listaEstudiantes}" class="btn btn-success btn-sm">
+                            <a th:href="@{/estudiante/mis-estudiantes}" class="btn btn-success btn-sm">
                                 <i class="bi bi-arrow-right me-1"></i>Ver estudiantes
                             </a>
                         </div>

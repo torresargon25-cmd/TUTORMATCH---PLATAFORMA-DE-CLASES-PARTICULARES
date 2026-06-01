@@ -1,5 +1,5 @@
 
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
@@ -80,7 +80,7 @@
 
                 
                 <li class="nav-item" sec:authorize="hasRole('TUTOR')">
-                    <a class="nav-link" th:href="@{/sesion/lista}">
+                    <a class="nav-link" th:href="@{/sesion/mis-sesiones-tutor}">
                         <i class="bi bi-calendar-check me-1"></i>Mis sesiones
                     </a>
                 </li>

@@ -25,17 +25,26 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/css/**", "/js/**", "/img/**", "/webjars/**").permitAll()
-                .requestMatchers("/", "/auth/login", "/403", "/home", "/error").permitAll()
-                .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers("/sesion/mis-sesiones", "/sesion/reservar").hasAnyRole("ADMIN", "TUTOR", "ESTUDIANTE")
-                .requestMatchers("/tutor/buscar", "/tutor/detalle/**", "/tutor/reservar/**").hasAnyRole("ADMIN", "TUTOR", "ESTUDIANTE")
-                .requestMatchers("/estudiante/mi-perfil").hasAnyRole("ADMIN", "TUTOR", "ESTUDIANTE")
-                .requestMatchers("/admin/**", "/tutor/**", "/materia/**", "/sesion/**").hasRole("ADMIN")
-                .requestMatchers("/estudiante/**").hasAnyRole("ADMIN", "TUTOR", "ESTUDIANTE")
-                .anyRequest().authenticated()
-            )
+        		.authorizeHttpRequests(auth -> auth
+        	    .requestMatchers("/css/**", "/js/**", "/img/**", "/webjars/**").permitAll()
+        	    .requestMatchers("/", "/auth/login", "/403", "/home", "/error").permitAll()
+        	    .requestMatchers("/h2-console/**").permitAll()
+
+        	    
+        	    .requestMatchers("/sesion/mis-sesiones", "/sesion/reservar").hasAnyRole("ADMIN", "TUTOR", "ESTUDIANTE")
+        	    .requestMatchers("/sesion/mis-sesiones-tutor", "/estudiante/mis-estudiantes").hasAnyRole("ADMIN", "TUTOR", "ESTUDIANTE")
+        	    .requestMatchers("/tutor/buscar", "/tutor/detalle/**", "/tutor/reservar/**").hasAnyRole("ADMIN", "TUTOR", "ESTUDIANTE")
+        	    .requestMatchers("/estudiante/mi-perfil").hasAnyRole("ADMIN", "TUTOR", "ESTUDIANTE")
+
+        	    
+        	    .requestMatchers("/admin/**").hasRole("ADMIN")
+        	    .requestMatchers("/tutor/**").hasRole("ADMIN")
+        	    .requestMatchers("/materia/**").hasRole("ADMIN")
+        	    .requestMatchers("/sesion/**").hasRole("ADMIN") 
+        	    .requestMatchers("/estudiante/**").hasAnyRole("ADMIN", "TUTOR", "ESTUDIANTE")
+
+        	    .anyRequest().authenticated()
+        	)
             .formLogin(form -> form
                 .loginPage("/auth/login")
                 .loginProcessingUrl("/auth/login")

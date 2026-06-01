@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.salesianostriana.dam.gonzalotorres_tutormatch.enums.EstadoSesion;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Estudiante;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.SesionTutoria;
 
 @Repository
@@ -60,4 +61,10 @@ public interface SesionTutoriaRepository extends JpaRepository<SesionTutoria, Lo
     List<SesionTutoria> findSesionesentreDechas(
             @Param("fechaDesde") LocalDateTime fechaDesde,
             @Param("fechaHasta") LocalDateTime fechaHasta);
+    
+    @Query("SELECT s FROM SesionTutoria s WHERE s.tutor.username = :username")
+    List<SesionTutoria> findByTutorUsername(@Param("username") String username);
+
+    @Query("SELECT DISTINCT s.estudiante FROM SesionTutoria s WHERE s.tutor.username = :username")
+    List<Estudiante> findEstudiantesByTutorUsername(@Param("username") String username);
 }

@@ -96,4 +96,11 @@ public class SesionTutoriaService extends BaseServiceImpl<SesionTutoria, Long, S
         return sesionTutoriaRepository.findSesionesentreDechas(fechaDesde, fechaHasta);
     }
     
+    public List<SesionTutoria> findMisSesionesTutor(String username) {
+        return sesionTutoriaRepository.findByTutorUsername(username);
+    }
+
+    public List<Estudiante> findMisEstudiantes(String username) {
+        return sesionTutoriaRepository.findEstudiantesByTutorUsername(username);
+    }
 }
