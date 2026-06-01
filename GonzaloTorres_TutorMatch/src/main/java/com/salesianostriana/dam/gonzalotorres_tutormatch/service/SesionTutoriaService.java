@@ -91,4 +91,9 @@ public class SesionTutoriaService extends BaseServiceImpl<SesionTutoria, Long, S
     public List<SesionTutoria> findSesionesProgramadasPorTutor(Long tutorId) {
         return sesionTutoriaRepository.findSesionesProgramadasPorTutor(tutorId);
     }
+    
+    public List<SesionTutoria> findSesionesEntreFechas(LocalDateTime fechaDesde, LocalDateTime fechaHasta) {
+        return sesionTutoriaRepository.findSesionesentreDechas(fechaDesde, fechaHasta);
+    }
+    
 }

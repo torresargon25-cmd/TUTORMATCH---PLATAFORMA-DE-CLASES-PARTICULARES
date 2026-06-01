@@ -25,4 +25,8 @@ public class TutorService extends BaseServiceImpl<Tutor, Long, TutorRepository> 
     public List<Tutor> buscarPorEspecialidad(String especialidad) {
         return repository.findByEspecialidadContains(especialidad);
     }
+    
+    public List<Object[]> findTutoresConMasSesiones() {
+        return repository.findTutoresConMasSesiones();
+    }
 }

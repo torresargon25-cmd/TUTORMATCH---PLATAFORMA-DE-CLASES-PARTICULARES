@@ -55,4 +55,9 @@ public interface SesionTutoriaRepository extends JpaRepository<SesionTutoria, Lo
     
     @Query("SELECT s FROM SesionTutoria s WHERE s.tutor.id = :tutorId AND s.estado = 'PROGRAMADA'")
     List<SesionTutoria> findSesionesProgramadasPorTutor(@Param("tutorId") Long tutorId);
+    
+    @Query("SELECT s FROM SesionTutoria s WHERE s.fechaInicio >= :fechaDesde AND s.fechaFin <= :fechaHasta")
+    List<SesionTutoria> findSesionesentreDechas(
+            @Param("fechaDesde") LocalDateTime fechaDesde,
+            @Param("fechaHasta") LocalDateTime fechaHasta);
 }

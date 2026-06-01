@@ -1,16 +1,15 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.controller;
 
+import java.util.List;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.SesionTutoria;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.EstudianteService;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.MateriaService;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.SesionTutoriaService;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.TutorService;
-
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -53,6 +52,11 @@ public class HomeController {
         model.addAttribute("totalMaterias", materiaService.count());
         model.addAttribute("totalSesiones", sesionTutoriaService.count());
 
+        
+        model.addAttribute("tutoresConMasSesiones", tutorService.findTutoresConMasSesiones());
+        model.addAttribute("materiasMasDemandadas", materiaService.findMateriasMasDemandadas());
+
+        
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         double costeMensual = sesionTutoriaService.findMisSesiones(username)
                 .stream()
@@ -63,4 +67,6 @@ public class HomeController {
 
         return "home";
     }
+    
+    
 }

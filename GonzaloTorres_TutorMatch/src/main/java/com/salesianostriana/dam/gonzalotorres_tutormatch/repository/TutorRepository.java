@@ -15,4 +15,6 @@ public interface TutorRepository extends JpaRepository<Tutor,Long>{
 	@Query("SELECT t FROM Tutor t WHERE LOWER(t.especialidad) LIKE LOWER(CONCAT('%', :especialidad, '%'))")
     List<Tutor> findByEspecialidadContains(@Param("especialidad") String especialidad);
 	
+	@Query("SELECT s.tutor, COUNT(s) as total FROM SesionTutoria s GROUP BY s.tutor ORDER BY total DESC")
+	List<Object[]> findTutoresConMasSesiones();
 }

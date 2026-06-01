@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Materia;
@@ -12,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MateriaService extends BaseServiceImpl<Materia, Long, MateriaRepository>{
 
-	private MateriaRepository materiarepository;
+	private final MateriaRepository materiarepository;
 	
+	public List<Object[]> findMateriasMasDemandadas() {
+        return repository.findMateriasMasDemandadas();
+    }
 }

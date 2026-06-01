@@ -215,5 +215,19 @@ public class ControllerSesionTutoria {
         sesionService.save(sesion);
         return "redirect:/sesion/mis-sesiones";
     }
+    
+    @GetMapping("/entre-fechas")
+    public String entreFechas(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaDesde,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaHasta,
+            Model model) {
+
+        if (fechaDesde != null && fechaHasta != null) {
+            model.addAttribute("sesiones", sesionService.findSesionesEntreFechas(fechaDesde, fechaHasta));
+            model.addAttribute("fechaDesde", fechaDesde);
+            model.addAttribute("fechaHasta", fechaHasta);
+        }
+        return "sesion/entreFechas";
+    }
 }
 
