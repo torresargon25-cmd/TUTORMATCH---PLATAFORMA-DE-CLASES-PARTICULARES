@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.salesianostriana.dam.gonzalotorres_tutormatch.enums.Rol;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Estudiante;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.EstudianteService;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.SesionTutoriaService;
@@ -34,7 +36,12 @@ public class ControllerEstudiante {
 
     @GetMapping("/add")
     public String add(Model model) {
-        model.addAttribute("estudiante", new Estudiante());
+
+        Estudiante estudiante = new Estudiante();
+        estudiante.setRol(Rol.ESTUDIANTE);
+
+        model.addAttribute("estudiante", estudiante);
+
         return "estudiante/form_estudiante";
     }
 

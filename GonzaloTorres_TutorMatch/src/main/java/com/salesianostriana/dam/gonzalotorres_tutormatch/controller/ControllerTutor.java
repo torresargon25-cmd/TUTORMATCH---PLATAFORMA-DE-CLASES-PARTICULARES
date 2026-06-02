@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.SesionTutoria;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Tutor;
@@ -56,10 +58,15 @@ public class ControllerTutor {
     }
 
     @GetMapping("borrar/{id}")
-    public String borrarTutor(@PathVariable Long id) {
-        Optional<Tutor> tutorABorrar = tutorService.findById(id);
-        if (tutorABorrar.isPresent()) {
-            tutorService.delete(tutorABorrar.get());
+    public String borrarTutor(@PathVariable Long id, RedirectAttributes redirectAttrs) {
+        try {
+            Optional<Tutor> tutorABorrar = tutorService.findById(id);
+            if (tutorABorrar.isPresent()) {
+                tutorService.delete(tutorABorrar.get());
+            }
+        } catch (DataIntegrityViolationException e) {
+            redirectAttrs.addFlashAttribute("errorBorrar",
+                "No se puede eliminar el tutor porque tiene sesiones asociadas.");
         }
         return "redirect:/tutor/";
     }
