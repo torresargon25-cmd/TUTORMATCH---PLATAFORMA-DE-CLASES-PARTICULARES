@@ -1,13 +1,81 @@
 package com.salesianostriana.dam.gonzalotorres_tutormatch.controller;
-
+ 
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Estudiante;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.model.SesionTutoria;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.service.EstudianteService;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.service.MateriaService;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.service.SesionTutoriaService;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.service.TutorService;
+import lombok.RequiredArgsConstructor;
+ 
+@Controller
+@RequiredArgsConstructor
 public class HomeController {
-
-	@GetMapping("/")
+ 
+    private final TutorService tutorService;
+    private final EstudianteService estudianteService;
+    private final MateriaService materiaService;
+    private final SesionTutoriaService sesionTutoriaService;
+ 
+    @GetMapping("/")
     public String index() {
         return "index";
     }
-	
+ 
+    @GetMapping("/admin/")
+    public String adminPanel(Model model) {
+        model.addAttribute("totalTutores", tutorService.count());
+        model.addAttribute("totalEstudiantes", estudianteService.count());
+        model.addAttribute("totalMaterias", materiaService.count());
+        model.addAttribute("totalSesiones", sesionTutoriaService.count());
+        return "admin/index";
+    }
+ 
+    @GetMapping("/auth/login")
+    public String login() {
+        return "login";
+    }
+ 
+    @GetMapping("/403")
+    public String accesoDenegado() {
+        return "403";
+    }
+ 
+    @GetMapping("/home")
+    public String home(Model model) {
+        model.addAttribute("totalTutores", tutorService.count());
+        model.addAttribute("totalEstudiantes", estudianteService.count());
+        model.addAttribute("totalMaterias", materiaService.count());
+        model.addAttribute("totalSesiones", sesionTutoriaService.count());
+ 
+        model.addAttribute("tutoresConMasSesiones", tutorService.findTutoresConMasSesiones());
+        model.addAttribute("materiasMasDemandadas", materiaService.findMateriasMasDemandadas());
+        model.addAttribute("estudiantesConMasTutorias", estudianteService.findEstudiantesConMasTutorias());
+ 
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+ 
+        List<SesionTutoria> mySesiones = new ArrayList<>();
+        List<Estudiante> misEstudiantes = new ArrayList<>();
+        tutorService.buscarPorUsername(username).ifPresent(tutor -> {
+            mySesiones.addAll(sesionTutoriaService.findMisSesionesTutor(username));
+            misEstudiantes.addAll(sesionTutoriaService.findMisEstudiantes(username));
+        });
+        model.addAttribute("misSesionesTutor", mySesiones);
+        model.addAttribute("misEstudiantes", misEstudiantes);
+ 
+        double costeMensual = sesionTutoriaService.findMisSesiones(username)
+                .stream()
+                .filter(s -> s.getCosteTotal() != null)
+                .mapToDouble(SesionTutoria::getCosteTotal)
+                .sum();
+        model.addAttribute("costeMensual", costeMensual);
+ 
+        return "home";
+    }
 }
