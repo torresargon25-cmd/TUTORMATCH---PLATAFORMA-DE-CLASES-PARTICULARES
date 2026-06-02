@@ -30,7 +30,8 @@
                       th:object="${estudiante}"
                       method="post">
 
-                    <input type="hidden" th:field="*{id}">
+					  <input type="hidden" th:field="*{id}">
+					  <input type="hidden" name="rol" value="ESTUDIANTE">
 
                     <h6 class="fw-bold text-muted mb-3">Datos personales</h6>
                     <div class="row g-3">
