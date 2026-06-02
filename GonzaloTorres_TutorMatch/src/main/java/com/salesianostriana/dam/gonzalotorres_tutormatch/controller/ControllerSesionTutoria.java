@@ -37,8 +37,13 @@ public class ControllerSesionTutoria {
     private final MateriaService materiaService;
 
     @GetMapping("/lista")
-    public String lista(Model model) {
-        model.addAttribute("sesiones", sesionService.findAll());
+    public String lista(@RequestParam(required = false) EstadoSesion estado, Model model) {
+        if (estado != null) {
+            model.addAttribute("sesiones", sesionService.findByEstado(estado));
+        } else {
+            model.addAttribute("sesiones", sesionService.findAll());
+        }
+        model.addAttribute("estadoSeleccionado", estado);
         return "sesion/listSesiones";
     }
 
@@ -231,9 +236,13 @@ public class ControllerSesionTutoria {
     }
     
     @GetMapping("/mis-sesiones-tutor")
-    public String misSesionesTutor(Model model) {
+    public String misSesionesTutor(@RequestParam(required = false) EstadoSesion estado, Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        model.addAttribute("sesiones", sesionService.findMisSesionesTutor(username));
+        if (estado != null) {
+            model.addAttribute("sesiones", sesionService.findMisSesionesTutorPorEstado(username, estado));
+        } else {
+            model.addAttribute("sesiones", sesionService.findMisSesionesTutor(username));
+        }
         return "sesion/misSesionesTutor";
     }
 }

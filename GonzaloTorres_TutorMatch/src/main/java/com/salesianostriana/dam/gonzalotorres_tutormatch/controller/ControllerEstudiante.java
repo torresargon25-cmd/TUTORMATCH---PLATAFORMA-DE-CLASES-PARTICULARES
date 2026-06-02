@@ -105,7 +105,7 @@ public class ControllerEstudiante {
     public String misEstudiantes(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("estudiantes", sesionTutoriaService.findMisEstudiantes(username));
-        return "estudiante/misEstudiantesTutor";
+        return "/estudiante/misEstudiantesTutor";
     }
 }
 	

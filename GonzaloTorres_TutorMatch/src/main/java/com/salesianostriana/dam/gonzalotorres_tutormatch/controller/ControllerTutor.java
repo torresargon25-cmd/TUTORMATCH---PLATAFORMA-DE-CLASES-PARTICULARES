@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.salesianostriana.dam.gonzalotorres_tutormatch.enums.Rol;
+import com.salesianostriana.dam.gonzalotorres_tutormatch.exception.AdminNoBorrableException;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.SesionTutoria;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.model.Tutor;
 import com.salesianostriana.dam.gonzalotorres_tutormatch.service.MateriaService;
@@ -62,6 +64,9 @@ public class ControllerTutor {
         try {
             Optional<Tutor> tutorABorrar = tutorService.findById(id);
             if (tutorABorrar.isPresent()) {
+                if (tutorABorrar.get().getRol() == Rol.ADMIN) {
+                    throw new AdminNoBorrableException();
+                }
                 tutorService.delete(tutorABorrar.get());
             }
         } catch (DataIntegrityViolationException e) {

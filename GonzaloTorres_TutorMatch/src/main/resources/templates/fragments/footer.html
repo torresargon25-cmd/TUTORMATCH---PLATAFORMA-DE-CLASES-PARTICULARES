@@ -1,95 +1,21 @@
-<footer th:fragment="footer"
-        class="bg-dark text-white mt-auto">
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
 
-    <div class="container py-4">
-
-        <div class="row g-4">
-
-            
-            <div class="col-md-6">
-
-                <h5 class="fw-bold">
-                    <i class="bi bi-mortarboard-fill me-2"></i>
-                    TutorMatch
-                </h5>
-
-                <p class="text-white-50 mb-0">
-                    Plataforma de gestión de clases particulares
-                    entre tutores y estudiantes.
-                </p>
-
-            </div>
-
-            
-            <div class="col-md-3">
-
-                <h6 class="fw-semibold mb-3">
-                    Navegación
-                </h6>
-
-                <ul class="list-unstyled">
-
-                    <li class="mb-2">
-                        <a th:href="@{/}"
-                           class="text-decoration-none text-white-50">
-
-                            Inicio
-
-                        </a>
-                    </li>
-
-                    <li class="mb-2">
-                        <a th:href="@{/tutor/}"
-                           class="text-decoration-none text-white-50">
-
-                            Tutores
-
-                        </a>
-                    </li>
-
-                    <li class="mb-2">
-                        <a th:href="@{/sesion/}"
-                           class="text-decoration-none text-white-50">
-
-                            Sesiones
-
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-            
-            <div class="col-md-3">
-
-                <h6 class="fw-semibold mb-3">
-                    Información
-                </h6>
-
-                <p class="text-white-50 mb-2">
-                    Proyecto Final 1º DAM
-                </p>
-
-                <p class="text-white-50 mb-0">
-                    Salesianos Triana
-                </p>
-
-            </div>
-
+<footer th:fragment="footer" class="mt-auto py-4"
+        style="background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%);">
+    <div class="container text-center text-white">
+        <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
+            <span class="fw-bold fs-5">
+                <i class="bi bi-mortarboard-fill me-2"></i>TutorMatch
+            </span>
+            <span class="opacity-75">·</span>
+            <span class="opacity-75">Gonzalo Torres Arroyo</span>
+            <span class="opacity-75">·</span>
+            <span class="opacity-75">Proyecto Final 1º DAM</span>
         </div>
-
-        <hr class="border-secondary my-4">
-
-        
-        <div class="text-center">
-
-            <p class="small text-white-50 mb-0">
-                © 2026 TutorMatch · Todos los derechos reservados
-            </p>
-
-        </div>
-
     </div>
-
 </footer>
+
+</body>
+</html>

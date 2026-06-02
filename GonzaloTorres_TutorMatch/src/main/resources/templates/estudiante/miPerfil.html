@@ -9,11 +9,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; }</style>
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="mb-4 d-flex flex-column min-vh-100">
 
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <main class="flex-grow-1">
+    <main class="my-5 container">
     <div class="container mt-4">
 
         <div class="mb-4">
@@ -23,7 +23,7 @@
 
         <div class="row g-4">
 
-            <!-- Tarjeta izquierda -->
+            
             <div class="col-md-4">
                 <div class="card border-0 shadow-sm text-center p-4">
                     <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
@@ -37,10 +37,10 @@
                 </div>
             </div>
 
-            <!-- Tarjeta derecha -->
+            
             <div class="col-md-8">
 
-                <!-- Datos personales -->
+                
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-white border-bottom fw-bold py-3">
                         <i class="bi bi-person me-2 text-success"></i>Datos personales
@@ -79,7 +79,7 @@
                     </div>
                 </div>
 
-                <!-- Datos tutor legal si es menor -->
+                
                 <div class="card border-0 shadow-sm mb-4" th:if="${estudiante.esMenor}">
                     <div class="card-header bg-white border-bottom fw-bold py-3">
                         <i class="bi bi-person-check me-2 text-warning"></i>Datos del tutor legal
@@ -102,7 +102,7 @@
                     </div>
                 </div>
 
-                <!-- Accesos rápidos -->
+                
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white border-bottom fw-bold py-3">
                         <i class="bi bi-lightning me-2 text-primary"></i>Accesos rápidos

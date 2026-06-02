@@ -9,11 +9,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; }</style>
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="mb-4 d-flex flex-column min-vh-100"">
 
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <main class="flex-grow-1">
+    <main class="my-5 container">
     <div class="container mt-4">
 
         <div class="mb-4">
@@ -21,7 +21,7 @@
             <p class="text-muted small mb-0">Consulta todas las sesiones dentro de un rango de fechas</p>
         </div>
 
-        <!-- Formulario de búsqueda -->
+        
         <div class="card border-0 shadow-sm mb-4">
             <div class="card-body">
                 <form th:action="@{/sesion/entre-fechas}" method="get" class="row g-3 align-items-end">
@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <!-- Resultados -->
+        
         <div th:if="${sesiones != null}">
 
             <div th:if="${#lists.isEmpty(sesiones)}" class="alert alert-info">
@@ -56,7 +56,7 @@
                     <i class="bi bi-list-ul me-2 text-primary"></i>
                     Resultados — <span th:text="${#lists.size(sesiones)}">0</span> sesiones encontradas
                 </div>
-                <div class="card-body p-0">
+                <div class="table-responsive">
                     <table class="table table-hover mb-0">
                         <thead class="table-light">
                             <tr>

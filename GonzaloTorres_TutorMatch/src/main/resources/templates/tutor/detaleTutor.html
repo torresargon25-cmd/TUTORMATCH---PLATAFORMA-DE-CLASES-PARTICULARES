@@ -9,15 +9,17 @@
     <style>body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; }</style>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="mb-4 d-flex flex-column min-vh-100">
 
     <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="my-5 container">
 
     <div class="container mt-4">
 
         <div class="row g-4">
 
-            <!-- Tarjeta izquierda -->
+            
             <div class="col-md-4">
                 <div class="card border-0 shadow-sm text-center p-4">
 
@@ -48,7 +50,7 @@
                 </div>
             </div>
 
-            <!-- Tarjeta derecha -->
+            
             <div class="col-md-8">
 
                 <div class="card border-0 shadow-sm mb-4">
@@ -105,12 +107,12 @@
                     </div>
                 </div>
 
-                <!-- Sesiones asociadas -->
+                
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white border-bottom fw-bold py-3">
                         <i class="bi bi-calendar-check me-2 text-primary"></i>Sesiones de tutoría
                     </div>
-                    <div class="card-body p-0">
+                    <div class="table responsive">
                         <table class="table table-hover mb-0">
                             <thead class="table-light">
                                 <tr>
@@ -154,6 +156,8 @@
         </div>
 
     </div>
+
+    </main>
 
     <div th:replace="~{fragments/footer :: footer}"></div>
     

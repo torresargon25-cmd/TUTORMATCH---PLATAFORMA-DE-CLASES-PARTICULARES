@@ -42,4 +42,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 	        model.addAttribute("errorMensaje", ex.getMessage());
 	        return "error";
 	    }
+	    @ExceptionHandler(AdminNoBorrableException.class)
+	    public String handleAdminNoborrable(AdminNoBorrableException ex, Model model) {
+	        model.addAttribute("errorTitulo", "Operación No Permitida");
+	        model.addAttribute("errorMensaje", ex.getMessage());
+	        return "error";
+	    }
 	}

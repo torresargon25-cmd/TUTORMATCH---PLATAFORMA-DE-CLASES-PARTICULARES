@@ -14,10 +14,10 @@
         .card-acceso:hover { transform: translateY(-4px); }
     </style>
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="mb-4 d-flex flex-column min-vh-100">
 
     <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <main class="flex-grow-1">
+    <main class="my-5 container">
     <div class="container mt-4">
 
         <div class="mb-4">
@@ -34,7 +34,7 @@
 
         <div th:if="${errorAcceso}" class="alert alert-danger" th:text="${errorAcceso}"></div>
 
-        <!-- ADMIN -->
+        
         <div sec:authorize="hasRole('ADMIN')">
 
             <div class="row g-4 mb-4">
@@ -68,7 +68,7 @@
                 </div>
             </div>
 
-            <!-- Fila 1: tutores + materias -->
+            
             <div class="row g-4 mb-4">
                 <div class="col-md-6">
                     <div class="card border-0 shadow-sm h-100">
@@ -118,7 +118,7 @@
                 </div>
             </div>
 
-            <!-- Fila 2: estudiantes con más tutorías -->
+            
             <div class="row g-4 mb-4">
                 <div class="col-md-6">
                     <div class="card border-0 shadow-sm h-100">
@@ -189,7 +189,7 @@
 
         </div>
 
-        <!-- TUTOR -->
+        
         <div sec:authorize="hasRole('TUTOR')">
             <div class="row g-4">
                 <div class="col-md-6">
@@ -203,7 +203,7 @@
                                 <a th:href="@{/sesion/mis-sesiones-tutor}" class="btn btn-primary btn-sm">
                                     <i class="bi bi-list-ul me-1"></i>Ver todas
                                 </a>
-                                <a th:href="@{/sesion/lista?estado=PROGRAMADA}" class="btn btn-outline-primary btn-sm">
+                                <a th:href="@{/sesion/mis-sesiones-tutor?estado=PROGRAMADA}" class="btn btn-outline-primary btn-sm">
                                     <i class="bi bi-clock me-1"></i>Programadas
                                 </a>
                             </div>
@@ -226,7 +226,7 @@
             </div>
         </div>
 
-        <!-- ESTUDIANTE -->
+        
         <div sec:authorize="hasRole('ESTUDIANTE')">
             <div class="row g-4 mb-4">
                 <div class="col-md-4">

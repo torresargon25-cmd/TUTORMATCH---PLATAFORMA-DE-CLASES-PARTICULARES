@@ -103,4 +103,12 @@ public class SesionTutoriaService extends BaseServiceImpl<SesionTutoria, Long, S
     public List<Estudiante> findMisEstudiantes(String username) {
         return sesionTutoriaRepository.findEstudiantesByTutorUsername(username);
     }
+    
+    public List<SesionTutoria> findByEstado(EstadoSesion estado) {
+        return sesionTutoriaRepository.findByEstado(estado);
+    }
+    
+    public List<SesionTutoria> findMisSesionesTutorPorEstado(String username, EstadoSesion estado) {
+        return sesionTutoriaRepository.findByTutorUsernameAndEstado(username, estado);
+    }
 }

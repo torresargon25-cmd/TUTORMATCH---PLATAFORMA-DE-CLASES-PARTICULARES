@@ -13,9 +13,11 @@
     </style>
 </head>
 
-<body>
+<body class="mb-4 d-flex flex-column min-vh-100">
 
     <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="my-5 container">
 
     <div class="container mt-4">
 
@@ -140,6 +142,8 @@
         </div>
 
     </div>
+
+    </main>
 
     <div th:replace="~{fragments/footer :: footer}"></div>
 

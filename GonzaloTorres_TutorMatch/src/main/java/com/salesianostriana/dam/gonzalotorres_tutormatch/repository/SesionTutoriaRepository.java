@@ -67,4 +67,8 @@ public interface SesionTutoriaRepository extends JpaRepository<SesionTutoria, Lo
 
     @Query("SELECT DISTINCT s.estudiante FROM SesionTutoria s WHERE s.tutor.username = :username")
     List<Estudiante> findEstudiantesByTutorUsername(@Param("username") String username);
+    
+    List<SesionTutoria> findByEstado(EstadoSesion estado);
+    
+    List<SesionTutoria> findByTutorUsernameAndEstado(String username, EstadoSesion estado);
 }
