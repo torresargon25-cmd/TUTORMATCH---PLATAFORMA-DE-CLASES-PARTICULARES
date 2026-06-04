@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -100,12 +101,23 @@ public class ControllerSesionTutoria {
     }
 
     @GetMapping("/borrar/{id}")
-    public String borrar(@PathVariable Long id) {
-        Optional<SesionTutoria> sesion = sesionService.findById(id);
-        if (sesion.isPresent()) {
-            sesionService.delete(sesion.get());
+    public String borrar(@PathVariable Long id,
+                         Authentication auth) {
+
+        sesionService.findById(id)
+                .ifPresent(sesionService::delete);
+
+        if (auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            return "redirect:/sesion/lista";
         }
-        return "redirect:/sesion/lista";
+
+        if (auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_TUTOR"))) {
+            return "redirect:/sesion/mis-sesiones-tutor";
+        }
+
+        return "redirect:/sesion/mis-sesiones";
     }
 
     @GetMapping("/editar/{id}")
@@ -217,6 +229,8 @@ public class ControllerSesionTutoria {
                 .build();
 
         sesionService.calcularCoste(sesion);
+        sesionService.aplicarRecargoPorUrgencia(sesion);
+        sesionService.aplicarDescuentoVolumen(sesion);
         sesionService.save(sesion);
         return "redirect:/sesion/mis-sesiones";
     }
@@ -245,5 +259,6 @@ public class ControllerSesionTutoria {
         }
         return "sesion/misSesionesTutor";
     }
+    
 }
 

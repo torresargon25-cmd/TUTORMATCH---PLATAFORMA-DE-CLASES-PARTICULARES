@@ -263,7 +263,7 @@
                         <div class="card-body">
                             <p class="text-muted small">Coste total de tus sesiones este mes.</p>
                             <h4 class="fw-bold text-info mb-0"
-                                th:text="${costeMensual != null ? costeMensual + ' €' : '0.00 €'}">0.00 €</h4>
+                                th:text="${#numbers.formatDecimal(costeMensual, 1, 2) + ' €'}"0.00 €</h4>
                         </div>
                     </div>
                 </div>

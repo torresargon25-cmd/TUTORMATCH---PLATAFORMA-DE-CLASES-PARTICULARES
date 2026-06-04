@@ -15,14 +15,16 @@ import com.salesianostriana.dam.gonzalotorres_tutormatch.model.SesionTutoria;
 public interface SesionTutoriaRepository extends JpaRepository<SesionTutoria, Long> {
 
     @Query("SELECT s FROM SesionTutoria s WHERE s.tutor.id = :tutorId " +
-           "AND s.fechaInicio < :fechaFin AND s.fechaFin > :fechaInicio")
+           "AND s.fechaInicio < :fechaFin AND s.fechaFin > :fechaInicio " +
+           "AND NOT (s.fechaFin = :fechaInicio OR s.fechaInicio = :fechaFin)")
     List<SesionTutoria> findSolapadasPorTutor(
             @Param("tutorId") Long tutorId,
             @Param("fechaInicio") LocalDateTime fechaInicio,
             @Param("fechaFin") LocalDateTime fechaFin);
 
     @Query("SELECT s FROM SesionTutoria s WHERE s.estudiante.id = :estudianteId " +
-           "AND s.fechaInicio < :fechaFin AND s.fechaFin > :fechaInicio")
+           "AND s.fechaInicio < :fechaFin AND s.fechaFin > :fechaInicio " +
+           "AND NOT (s.fechaFin = :fechaInicio OR s.fechaInicio = :fechaFin)")
     List<SesionTutoria> findSolapadasPorEstudiante(
             @Param("estudianteId") Long estudianteId,
             @Param("fechaInicio") LocalDateTime fechaInicio,
@@ -30,7 +32,8 @@ public interface SesionTutoriaRepository extends JpaRepository<SesionTutoria, Lo
 
     @Query("SELECT s FROM SesionTutoria s WHERE s.tutor.id = :tutorId " +
            "AND s.id != :sesionId " +
-           "AND s.fechaInicio < :fechaFin AND s.fechaFin > :fechaInicio")
+           "AND s.fechaInicio < :fechaFin AND s.fechaFin > :fechaInicio " +
+           "AND NOT (s.fechaFin = :fechaInicio OR s.fechaInicio = :fechaFin)")
     List<SesionTutoria> findSolapadasPorTutorExcluyendo(
             @Param("tutorId") Long tutorId,
             @Param("sesionId") Long sesionId,
@@ -39,36 +42,42 @@ public interface SesionTutoriaRepository extends JpaRepository<SesionTutoria, Lo
 
     @Query("SELECT s FROM SesionTutoria s WHERE s.estudiante.id = :estudianteId " +
            "AND s.id != :sesionId " +
-           "AND s.fechaInicio < :fechaFin AND s.fechaFin > :fechaInicio")
+           "AND s.fechaInicio < :fechaFin AND s.fechaFin > :fechaInicio " +
+           "AND NOT (s.fechaFin = :fechaInicio OR s.fechaInicio = :fechaFin)")
     List<SesionTutoria> findSolapadasPorEstudianteExcluyendo(
             @Param("estudianteId") Long estudianteId,
             @Param("sesionId") Long sesionId,
             @Param("fechaInicio") LocalDateTime fechaInicio,
             @Param("fechaFin") LocalDateTime fechaFin);
-    
+
     @Query("SELECT s FROM SesionTutoria s WHERE s.estudiante.username = :username")
     List<SesionTutoria> findByEstudianteUsername(@Param("username") String username);
-    
+
     @Query("SELECT s FROM SesionTutoria s WHERE s.estudiante.username = :username AND s.estado = :estado")
     List<SesionTutoria> findByEstudianteUsernameAndEstado(
             @Param("username") String username,
             @Param("estado") EstadoSesion estado);
-    
+
     @Query("SELECT s FROM SesionTutoria s WHERE s.tutor.id = :tutorId AND s.estado = 'PROGRAMADA'")
     List<SesionTutoria> findSesionesProgramadasPorTutor(@Param("tutorId") Long tutorId);
-    
+
     @Query("SELECT s FROM SesionTutoria s WHERE s.fechaInicio >= :fechaDesde AND s.fechaFin <= :fechaHasta")
     List<SesionTutoria> findSesionesentreDechas(
             @Param("fechaDesde") LocalDateTime fechaDesde,
             @Param("fechaHasta") LocalDateTime fechaHasta);
-    
+
     @Query("SELECT s FROM SesionTutoria s WHERE s.tutor.username = :username")
     List<SesionTutoria> findByTutorUsername(@Param("username") String username);
 
     @Query("SELECT DISTINCT s.estudiante FROM SesionTutoria s WHERE s.tutor.username = :username")
     List<Estudiante> findEstudiantesByTutorUsername(@Param("username") String username);
-    
+
+    @Query("SELECT COUNT(s) FROM SesionTutoria s WHERE s.estudiante.id = :estudianteId AND s.tutor.id = :tutorId")
+    long countByEstudianteAndTutor(
+            @Param("estudianteId") Long estudianteId,
+            @Param("tutorId") Long tutorId);
+
     List<SesionTutoria> findByEstado(EstadoSesion estado);
-    
+
     List<SesionTutoria> findByTutorUsernameAndEstado(String username, EstadoSesion estado);
 }
